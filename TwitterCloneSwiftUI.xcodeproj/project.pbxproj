@@ -111,9 +111,12 @@
 		87B089022A1871B60023B4A2 /* TwitterCloneSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				87B089032A1871B60023B4A2 /* TwitterCloneSwiftUIApp.swift */,
-				87B089052A1871B60023B4A2 /* ContentView.swift */,
-				87B089072A1871B70023B4A2 /* Assets.xcassets */,
+				87B0892D2A188B2E0023B4A2 /* AppLifeCycle */,
+				87B089302A188B5B0023B4A2 /* Model */,
+				87B0892F2A188B530023B4A2 /* View */,
+				87B089312A188B600023B4A2 /* ViewModel */,
+				87B0892E2A188B410023B4A2 /* Resources */,
+				87B089322A188B7D0023B4A2 /* Utility */,
 				87B089092A1871B70023B4A2 /* Preview Content */,
 			);
 			path = TwitterCloneSwiftUI;
@@ -144,6 +147,51 @@
 			path = TwitterCloneSwiftUIUITests;
 			sourceTree = "<group>";
 		};
+		87B0892D2A188B2E0023B4A2 /* AppLifeCycle */ = {
+			isa = PBXGroup;
+			children = (
+				87B089032A1871B60023B4A2 /* TwitterCloneSwiftUIApp.swift */,
+				87B089052A1871B60023B4A2 /* ContentView.swift */,
+			);
+			path = AppLifeCycle;
+			sourceTree = "<group>";
+		};
+		87B0892E2A188B410023B4A2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				87B089072A1871B70023B4A2 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		87B0892F2A188B530023B4A2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		87B089302A188B5B0023B4A2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		87B089312A188B600023B4A2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		87B089322A188B7D0023B4A2 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		A3F68A9B12E39010535E6166 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,7 +202,6 @@
 				2407D9779DB9B3F3384A337C /* Pods-TwitterCloneSwiftUITests.debug.xcconfig */,
 				AE6C8C64A38F29BCA7313B2D /* Pods-TwitterCloneSwiftUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
