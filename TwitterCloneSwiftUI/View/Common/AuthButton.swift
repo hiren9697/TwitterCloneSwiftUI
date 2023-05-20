@@ -17,8 +17,9 @@ struct AuthButton: View {
         Button(action: action,
                label: {
             Text(title)
-                .font(Font.custom(AppFont.regular.rawValue,
-                                  size: 19))
+                .font(Font.custom(AppFont.semibold.rawValue,
+                                  size: 16))
+                .foregroundColor(AppColor.cBlue)
                 .frame(maxWidth: .infinity)
                 .frame(height: 44)
                 .background(

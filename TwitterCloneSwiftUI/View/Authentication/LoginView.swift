@@ -9,9 +9,13 @@ import SwiftUI
 
 // MARK: - View
 struct LoginView: View {
+    @StateObject var viewModel = LoginVM()
+    @FocusState var focusedField: LoginInputFields?
+    
     var body: some View {
         ScrollView {
             image
+            tfs
             button
         }
         .frame(maxWidth: .infinity)
@@ -26,6 +30,34 @@ extension LoginView {
     var image: some View {
         Image("ic_twitter_logo_auth")
             .padding(.top, 70)
+    }
+    
+    var tfs: some View {
+        VStack {
+            AuthTF<LoginInputFields>(text: $viewModel.email,
+                                     isSecureField: false,
+                                     focusedField: $focusedField,
+                                     placeholder: "Email",
+                                     leadingIconName: "envelope",
+                                     keyboardType: .emailAddress,
+                                     submitLabel: .next,
+                                     fieldType: LoginInputFields.email,
+                                     onSubmit: {
+                focusedField = .password
+            })
+            AuthTF<LoginInputFields>(text: $viewModel.password,
+                                     isSecureField: true,
+                                     focusedField: $focusedField,
+                                     placeholder: "Password",
+                                     leadingIconName: "key",
+                                     keyboardType: .asciiCapable,
+                                     submitLabel: .done,
+                                     fieldType: LoginInputFields.password,
+                                     onSubmit: {
+                focusedField = nil
+            })
+        }
+        .padding()
     }
     
     var button: some View {

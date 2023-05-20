@@ -10,6 +10,8 @@ import SwiftUI
 struct AppColor {
     
     static let cWhite: Color = Color.white
+    static let cD3D3D3: Color = Color("cD3D3D3")
+    static let cF1F1F1: Color = Color("cF1F1F1")
     static let cRed: Color = Color.red
     static let cBlue: Color = Color("cBlue")
     //static let cCharcole: UIColor = UIColor(named: "charcole")!
