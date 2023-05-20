@@ -16,6 +16,7 @@ struct AuthTF<FieldType: Hashable>: View {
     let placeholder: String
     let leadingIconName: String
     let keyboardType: UIKeyboardType
+    let capitalization: TextInputAutocapitalization
     let submitLabel: SubmitLabel
     let fieldType: FieldType
     let onSubmit: VoidCallback
@@ -35,6 +36,7 @@ struct AuthTF<FieldType: Hashable>: View {
                     .foregroundColor(AppColor.white)
                     .tint(AppColor.white)
                     .keyboardType(keyboardType)
+                    .textInputAutocapitalization(capitalization)
                     .submitLabel(submitLabel)
                     .focused(focusedField.projectedValue, equals: fieldType)
                     .onSubmit(onSubmit)
@@ -48,6 +50,7 @@ struct AuthTF<FieldType: Hashable>: View {
                     .foregroundColor(AppColor.white)
                     .tint(AppColor.white)
                     .keyboardType(keyboardType)
+                    .textInputAutocapitalization(capitalization)
                     .submitLabel(submitLabel)
                     .focused(focusedField.projectedValue, equals: fieldType)
                     .onSubmit(onSubmit)
@@ -71,6 +74,7 @@ struct AuthTF_Previews: PreviewProvider {
                                  placeholder: "Email",
                                  leadingIconName: "envelope",
                                  keyboardType: .asciiCapable,
+                                 capitalization: .never,
                                  submitLabel: .next,
                                  fieldType: LoginInputFields.email,
                                  onSubmit: {})

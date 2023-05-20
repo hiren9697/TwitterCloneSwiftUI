@@ -24,7 +24,7 @@ struct LoginView: View {
         .ignoresSafeArea()
         .simpleToast(isPresented: $viewModel.showToast,
                      options: Application.toastOption,
-                     content: { SuccessToastView(message: "Simple message", type: .success) })
+                     content: { SuccessToastView(message: viewModel.inputErrorMessage, type: .failure) })
     }
 }
 
@@ -44,6 +44,7 @@ extension LoginView {
                                      placeholder: "Email",
                                      leadingIconName: "envelope",
                                      keyboardType: .emailAddress,
+                                     capitalization: .never,
                                      submitLabel: .next,
                                      fieldType: LoginInputFields.email,
                                      onSubmit: {
@@ -55,6 +56,7 @@ extension LoginView {
                                      placeholder: "Password",
                                      leadingIconName: "key",
                                      keyboardType: .asciiCapable,
+                                     capitalization: .never,
                                      submitLabel: .done,
                                      fieldType: LoginInputFields.password,
                                      onSubmit: {
@@ -67,9 +69,8 @@ extension LoginView {
     var button: some View {
         AuthButton(title: "Login",
                    action: {
-            viewModel.showToast = true
             Application.shared.endEditing()
-            Log.info("Login tapped")
+            viewModel.login()
         })
     }
 }
