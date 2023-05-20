@@ -59,6 +59,35 @@ class AuthInputValidator {
         }
     }
     
+    internal func validateSignupInputs(email: String,
+                                       passwrod: String,
+                                       fullname: String,
+                                       username: String)-> Result<Void, SignupInputError> {
+        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedPassword = passwrod.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedFullname = fullname.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedUsername = username.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedEmail.isEmpty {
+            return .failure(.emptyEmail)
+        } else if trimmedPassword.isEmpty {
+            return .failure(.emptyPassword)
+        } else if trimmedFullname.isEmpty {
+            return .failure(.emptyFullname)
+        } else if trimmedUsername.isEmpty {
+            return .failure(.emptyUsername)
+        } else if !isValidEmail(email: trimmedEmail) {
+            return .failure(.invalidEmail)
+        } else if !isValidPassword(password: trimmedPassword) {
+            return .failure(.invalidPassword)
+        } else if !isValidFullname(fullname: trimmedFullname) {
+            return .failure(.invalidFullname)
+        } else if !isValidUsername(username: trimmedUsername) {
+            return .failure(.invalidUsername)
+        } else {
+            return .success(())
+        }
+    }
+    
     private func isValidEmail(email: String)-> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
@@ -67,5 +96,13 @@ class AuthInputValidator {
     
     private func isValidPassword(password: String)-> Bool {
         return password.count >= 6
+    }
+    
+    private func isValidFullname(fullname: String)-> Bool {
+        return fullname.count >= 4
+    }
+    
+    private func isValidUsername(username: String)-> Bool {
+        return username.count >= 4
     }
 }

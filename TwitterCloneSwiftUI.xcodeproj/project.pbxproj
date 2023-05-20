@@ -53,6 +53,9 @@
 		87B089812A18D7E40023B4A2 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B089802A18D7E40023B4A2 /* LoginModel.swift */; };
 		87B089832A19003B0023B4A2 /* SuccessToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B089822A19003B0023B4A2 /* SuccessToastView.swift */; };
 		87B089852A190FE00023B4A2 /* Application+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B089842A190FE00023B4A2 /* Application+Extension.swift */; };
+		87B089872A1926D90023B4A2 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B089862A1926D90023B4A2 /* SignupView.swift */; };
+		87B089892A192A390023B4A2 /* SignupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B089882A192A390023B4A2 /* SignupModel.swift */; };
+		87B0898C2A192DEA0023B4A2 /* SignupVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B0898B2A192DEA0023B4A2 /* SignupVM.swift */; };
 		E0540CDED9F80D30F831133E /* Pods_TwitterCloneSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 703C90B0ECA6607B2FEC35F7 /* Pods_TwitterCloneSwiftUI.framework */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +128,9 @@
 		87B089802A18D7E40023B4A2 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		87B089822A19003B0023B4A2 /* SuccessToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessToastView.swift; sourceTree = "<group>"; };
 		87B089842A190FE00023B4A2 /* Application+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Application+Extension.swift"; sourceTree = "<group>"; };
+		87B089862A1926D90023B4A2 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
+		87B089882A192A390023B4A2 /* SignupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupModel.swift; sourceTree = "<group>"; };
+		87B0898B2A192DEA0023B4A2 /* SignupVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVM.swift; sourceTree = "<group>"; };
 		895712E161694967F0083428 /* Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.debug.xcconfig"; path = "Target Support Files/Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests/Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		98BE24B8C1E1443D7C691F65 /* Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.release.xcconfig"; path = "Target Support Files/Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests/Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AE6C8C64A38F29BCA7313B2D /* Pods-TwitterCloneSwiftUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterCloneSwiftUITests.release.xcconfig"; path = "Target Support Files/Pods-TwitterCloneSwiftUITests/Pods-TwitterCloneSwiftUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -263,7 +269,7 @@
 		87B089312A188B600023B4A2 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				87B0897D2A18D7750023B4A2 /* LoginVM.swift */,
+				87B0898A2A192DD80023B4A2 /* Authentication */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -323,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				87B089712A1896B70023B4A2 /* LoginView.swift */,
+				87B089862A1926D90023B4A2 /* SignupView.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -341,8 +348,18 @@
 			isa = PBXGroup;
 			children = (
 				87B089802A18D7E40023B4A2 /* LoginModel.swift */,
+				87B089882A192A390023B4A2 /* SignupModel.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		87B0898A2A192DD80023B4A2 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				87B0897D2A18D7750023B4A2 /* LoginVM.swift */,
+				87B0898B2A192DEA0023B4A2 /* SignupVM.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		A3F68A9B12E39010535E6166 /* Pods */ = {
@@ -625,9 +642,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87B089872A1926D90023B4A2 /* SignupView.swift in Sources */,
 				87B0896F2A188D0F0023B4A2 /* AppFonts.swift in Sources */,
 				87B089062A1871B60023B4A2 /* ContentView.swift in Sources */,
 				87B0896C2A188D0F0023B4A2 /* String+Extension.swift in Sources */,
+				87B0898C2A192DEA0023B4A2 /* SignupVM.swift in Sources */,
 				87B0897C2A18A4590023B4A2 /* AuthTF.swift in Sources */,
 				87B0896D2A188D0F0023B4A2 /* View+Extension.swift in Sources */,
 				87B089832A19003B0023B4A2 /* SuccessToastView.swift in Sources */,
@@ -645,6 +664,7 @@
 				87B0897A2A1898D00023B4A2 /* Common.swift in Sources */,
 				87B089662A188D0F0023B4A2 /* Constants.swift in Sources */,
 				87B0897E2A18D7750023B4A2 /* LoginVM.swift in Sources */,
+				87B089892A192A390023B4A2 /* SignupModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
