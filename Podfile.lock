@@ -4,19 +4,23 @@ PODS:
   - SDWebImage/Core (5.15.5)
   - SDWebImageSwiftUI (2.2.2):
     - SDWebImage (~> 5.10)
+  - SwiftUI-SimpleToast (0.6.2)
 
 DEPENDENCIES:
   - SDWebImageSwiftUI
+  - SwiftUI-SimpleToast
 
 SPEC REPOS:
   trunk:
     - SDWebImage
     - SDWebImageSwiftUI
+    - SwiftUI-SimpleToast
 
 SPEC CHECKSUMS:
   SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
   SDWebImageSwiftUI: 54ded4115b4ac6cd60b78f61415f86d070892d98
+  SwiftUI-SimpleToast: 34a7ede33ac00e1ab21cc114c041d68da5fbc6b3
 
-PODFILE CHECKSUM: 64266ba9ca021468e7d1f4a6ea57e769e5104f46
+PODFILE CHECKSUM: 56fdd0d0291f1fa19513e6ae0e2e8ebb07ee7a33
 
 COCOAPODS: 1.12.0

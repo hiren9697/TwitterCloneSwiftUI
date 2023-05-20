@@ -19,12 +19,12 @@ struct AuthButton: View {
             Text(title)
                 .font(Font.custom(AppFont.semibold.rawValue,
                                   size: 16))
-                .foregroundColor(AppColor.cBlue)
+                .foregroundColor(AppColor.blue)
                 .frame(maxWidth: .infinity)
                 .frame(height: 44)
                 .background(
                     RoundedRectangle(cornerRadius: 5)
-                        .fill(AppColor.cWhite)
+                        .fill(AppColor.primaryBackground)
                 )
                 .padding()
         })

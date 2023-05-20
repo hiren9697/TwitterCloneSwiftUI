@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUI_SimpleToast
 
 // MARK: - View
 struct LoginView: View {
@@ -19,8 +20,11 @@ struct LoginView: View {
             button
         }
         .frame(maxWidth: .infinity)
-        .background(AppColor.cBlue)
+        .background(AppColor.blue)
         .ignoresSafeArea()
+        .simpleToast(isPresented: $viewModel.showToast,
+                     options: Application.toastOption,
+                     content: { SuccessToastView(message: "Simple message", type: .success) })
     }
 }
 
@@ -63,6 +67,8 @@ extension LoginView {
     var button: some View {
         AuthButton(title: "Login",
                    action: {
+            viewModel.showToast = true
+            Application.shared.endEditing()
             Log.info("Login tapped")
         })
     }

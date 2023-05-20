@@ -51,6 +51,8 @@
 		87B0897C2A18A4590023B4A2 /* AuthTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B0897B2A18A4590023B4A2 /* AuthTF.swift */; };
 		87B0897E2A18D7750023B4A2 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B0897D2A18D7750023B4A2 /* LoginVM.swift */; };
 		87B089812A18D7E40023B4A2 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B089802A18D7E40023B4A2 /* LoginModel.swift */; };
+		87B089832A19003B0023B4A2 /* SuccessToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B089822A19003B0023B4A2 /* SuccessToastView.swift */; };
+		87B089852A190FE00023B4A2 /* Application+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B089842A190FE00023B4A2 /* Application+Extension.swift */; };
 		E0540CDED9F80D30F831133E /* Pods_TwitterCloneSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 703C90B0ECA6607B2FEC35F7 /* Pods_TwitterCloneSwiftUI.framework */; };
 /* End PBXBuildFile section */
 
@@ -121,6 +123,8 @@
 		87B0897B2A18A4590023B4A2 /* AuthTF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTF.swift; sourceTree = "<group>"; };
 		87B0897D2A18D7750023B4A2 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		87B089802A18D7E40023B4A2 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		87B089822A19003B0023B4A2 /* SuccessToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessToastView.swift; sourceTree = "<group>"; };
+		87B089842A190FE00023B4A2 /* Application+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Application+Extension.swift"; sourceTree = "<group>"; };
 		895712E161694967F0083428 /* Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.debug.xcconfig"; path = "Target Support Files/Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests/Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		98BE24B8C1E1443D7C691F65 /* Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.release.xcconfig"; path = "Target Support Files/Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests/Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AE6C8C64A38F29BCA7313B2D /* Pods-TwitterCloneSwiftUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterCloneSwiftUITests.release.xcconfig"; path = "Target Support Files/Pods-TwitterCloneSwiftUITests/Pods-TwitterCloneSwiftUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -310,6 +314,7 @@
 				87B089612A188D0E0023B4A2 /* Double+Extension.swift */,
 				87B089622A188D0E0023B4A2 /* String+Extension.swift */,
 				87B089632A188D0E0023B4A2 /* View+Extension.swift */,
+				87B089842A190FE00023B4A2 /* Application+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -327,6 +332,7 @@
 			children = (
 				87B089772A1898570023B4A2 /* AuthButton.swift */,
 				87B0897B2A18A4590023B4A2 /* AuthTF.swift */,
+				87B089822A19003B0023B4A2 /* SuccessToastView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -624,6 +630,7 @@
 				87B0896C2A188D0F0023B4A2 /* String+Extension.swift in Sources */,
 				87B0897C2A18A4590023B4A2 /* AuthTF.swift in Sources */,
 				87B0896D2A188D0F0023B4A2 /* View+Extension.swift in Sources */,
+				87B089832A19003B0023B4A2 /* SuccessToastView.swift in Sources */,
 				87B0896E2A188D0F0023B4A2 /* Mirror.swift in Sources */,
 				87B089782A1898570023B4A2 /* AuthButton.swift in Sources */,
 				87B089692A188D0F0023B4A2 /* CustomErrors.swift in Sources */,
@@ -632,6 +639,7 @@
 				87B0896B2A188D0F0023B4A2 /* Double+Extension.swift in Sources */,
 				87B089672A188D0F0023B4A2 /* Log.swift in Sources */,
 				87B089722A1896B70023B4A2 /* LoginView.swift in Sources */,
+				87B089852A190FE00023B4A2 /* Application+Extension.swift in Sources */,
 				87B089812A18D7E40023B4A2 /* LoginModel.swift in Sources */,
 				87B089682A188D0F0023B4A2 /* AppColors.swift in Sources */,
 				87B0897A2A1898D00023B4A2 /* Common.swift in Sources */,

@@ -9,20 +9,21 @@ import SwiftUI
 
 struct AppColor {
     
-    static let cWhite: Color = Color.white
     static let cD3D3D3: Color = Color("cD3D3D3")
     static let cF1F1F1: Color = Color("cF1F1F1")
-    static let cRed: Color = Color.red
-    static let cBlue: Color = Color("cBlue")
-    //static let cCharcole: UIColor = UIColor(named: "charcole")!
+    static let c50C878: Color = Color("c50C878")
+    static let c1DA1F2: Color = Color("c1DA1F2")
+    static let c141619: Color = Color("c141619")
+    static let c687684: Color = Color("c687684")
+    static let cFFFFFF: Color = Color("cFFFFFF")
+    static let cE7ECF0: Color = Color("cE7ECF0")
+    static let cCC5500: Color = Color("cCC5500")
     
-    static let cPrimaryBackground: Color = Color("cPrimaryBackground")
-    static let cButtonBackground: Color = Color("cButtonBackground")
-    static let cInputBackground: Color = Color("cInputBackground")
-    static let cInputBorder: Color = Color("cInputBorder")
-    static let cPrimaryTextColor: Color = Color("cPrimaryTextColor")
-    static let cSecondaryTextColor: Color = Color("cSecondaryTextColor")
-    static let cButtonTitleColor: Color = Color("cButtonTitleColor")
-    
-    static let cLoaderColor: Color = Color("cPrimaryTextColor")
+    static let white: Color = cFFFFFF
+    static let blue: Color = c1DA1F2
+    static let red: Color = cCC5500
+    static let primaryTextColor: Color = c141619
+    static let secondaryTextColor: Color = c687684
+    static let primaryBackground: Color = cFFFFFF
+    static let secondaryBackground: Color = cE7ECF0
 }

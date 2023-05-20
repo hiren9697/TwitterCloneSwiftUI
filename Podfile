@@ -7,6 +7,7 @@ target 'TwitterCloneSwiftUI' do
 
   # Pods for TwitterCloneSwiftUI
 pod 'SDWebImageSwiftUI'
+pod 'SwiftUI-SimpleToast'
 
   target 'TwitterCloneSwiftUITests' do
     inherit! :search_paths

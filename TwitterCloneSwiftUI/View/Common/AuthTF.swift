@@ -26,14 +26,14 @@ struct AuthTF<FieldType: Hashable>: View {
             HStack {
                 // 1. Icon
                 Image(systemName: leadingIconName)
-                    .foregroundColor(isFocusd ? AppColor.cWhite : AppColor.cD3D3D3)
+                    .foregroundColor(isFocusd ? AppColor.white : AppColor.cD3D3D3)
                 // 2. TextField
                 if isSecureField {
                     SecureField(placeholder,
                                 text: $text)
                     .font(Font.custom(AppFont.regular.rawValue, size: 14))
-                    .foregroundColor(AppColor.cWhite)
-                    .tint(AppColor.cWhite)
+                    .foregroundColor(AppColor.white)
+                    .tint(AppColor.white)
                     .keyboardType(keyboardType)
                     .submitLabel(submitLabel)
                     .focused(focusedField.projectedValue, equals: fieldType)
@@ -45,8 +45,8 @@ struct AuthTF<FieldType: Hashable>: View {
                         isFocusd = isEditing
                     })
                     .font(Font.custom(AppFont.regular.rawValue, size: 14))
-                    .foregroundColor(AppColor.cWhite)
-                    .tint(AppColor.cWhite)
+                    .foregroundColor(AppColor.white)
+                    .tint(AppColor.white)
                     .keyboardType(keyboardType)
                     .submitLabel(submitLabel)
                     .focused(focusedField.projectedValue, equals: fieldType)
@@ -57,7 +57,7 @@ struct AuthTF<FieldType: Hashable>: View {
             // 2. Divider
             Divider()
                 .frame(height: 0.8)
-                .background(isFocusd ? AppColor.cWhite : AppColor.cD3D3D3)
+                .background(isFocusd ? AppColor.white : AppColor.cD3D3D3)
         }
     }
 }
