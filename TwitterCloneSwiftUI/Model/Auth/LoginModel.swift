@@ -43,6 +43,8 @@ enum LoginInputError: Error, LocalizedError, CustomStringConvertible {
 // MARK: - Validator
 class AuthInputValidator {
     
+    let inputValidator = InputValidator()
+    
     internal func validateLoginInputs(email: String, passwrod: String)-> Result<Void, LoginInputError> {
         let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedPassword = passwrod.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -89,9 +91,7 @@ class AuthInputValidator {
     }
     
     private func isValidEmail(email: String)-> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailPred.evaluate(with: email)
+        inputValidator.isValidEmail(email: email)
     }
     
     private func isValidPassword(password: String)-> Bool {
@@ -103,6 +103,6 @@ class AuthInputValidator {
     }
     
     private func isValidUsername(username: String)-> Bool {
-        return username.count >= 4
+        return username.count >= 4 && !inputValidator.containsSpecialCharacters(text: username)
     }
 }

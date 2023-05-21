@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 // MARK: - View
 struct SignupView: View {
@@ -31,16 +32,36 @@ struct SignupView: View {
 extension SignupView {
     
     var image: some View {
-        Image("ic_user_placeholder")
-            .resizable()
-            .renderingMode(.template)
-            .foregroundColor(AppColor.white)
-            .frame(width: 80, height: 80)
-            .padding(.top, 70)
+        PhotosPicker(selection: $viewModel.profilePickerItem,
+                     label: {
+            // If user has selected image
+            if let photo = viewModel.profileImage {
+                photo
+                    .resizable()
+                    .frame(width: 80, height: 80)
+                    .clipShape(
+                        Circle()
+                    )
+                    .overlay(
+                        Circle()
+                            .stroke(AppColor.white, lineWidth: 2)
+                    )
+                    .padding(.top, 70)
+            } else {
+            // User hasn't selected image
+                Image("ic_user_placeholder")
+                    .resizable()
+                    .renderingMode(.template)
+                    .foregroundColor(AppColor.white)
+                    .frame(width: 80, height: 80)
+                    .padding(.top, 70)
+            }
+        })
     }
     
     var tfs: some View {
         VStack {
+            // 1. Email
             AuthTF<SignupInputFields>(text: $viewModel.email,
                                      isSecureField: false,
                                      focusedField: $focusedField,
@@ -53,6 +74,7 @@ extension SignupView {
                                      onSubmit: {
                 focusedField = .password
             })
+            // 2. Password
             AuthTF<SignupInputFields>(text: $viewModel.password,
                                      isSecureField: true,
                                      focusedField: $focusedField,
@@ -65,6 +87,7 @@ extension SignupView {
                                      onSubmit: {
                 focusedField = .fullname
             })
+            // 3. Fullname
             AuthTF<SignupInputFields>(text: $viewModel.fullname,
                                      isSecureField: false,
                                      focusedField: $focusedField,
@@ -77,6 +100,7 @@ extension SignupView {
                                      onSubmit: {
                 focusedField = .username
             })
+            // 4. Username
             AuthTF<SignupInputFields>(text: $viewModel.username,
                                      isSecureField: false,
                                      focusedField: $focusedField,

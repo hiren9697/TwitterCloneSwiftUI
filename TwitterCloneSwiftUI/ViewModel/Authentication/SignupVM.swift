@@ -6,10 +6,16 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 // MARK: - VM
 class SignupVM: ObservableObject {
     @Published var profileImage: Image?
+    @Published var profilePickerItem: PhotosPickerItem? {
+        didSet {
+            setProfileImage()
+        }
+    }
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var fullname: String = ""
@@ -36,12 +42,35 @@ extension SignupVM {
                                                          username: username)
         switch result {
         case .success(_):
+            inputErrorMessage = ""
+            showToast = false
             return true
         case .failure(let error):
             Log.error("Signup input error: \(error.localizedDescription)")
             inputErrorMessage = error.localizedDescription
             showToast = true
             return false
+        }
+    }
+    
+    internal func setProfileImage() {
+        guard let pickerItem = profilePickerItem else {
+            return
+        }
+        pickerItem.loadTransferable(type: Data.self) { result in
+            switch result {
+            case .success(let data):
+                guard let data = data,
+                let uiImage = UIImage(data: data) else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.profileImage = Image(uiImage: uiImage)
+                }
+            case .failure(let error):
+                Log.error("Error in loading image from PhotoPickerItem: \(error.localizedDescription)")
+                return
+            }
         }
     }
 }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0384BE2A9252DF7CE6D5FAF9 /* Pods_TwitterCloneSwiftUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A972284DAC275A66465B0F7 /* Pods_TwitterCloneSwiftUITests.framework */; };
 		5684AAE2ABC9CB2D9D6A5A44 /* Pods_TwitterCloneSwiftUI_TwitterCloneSwiftUIUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB84F78C257CBF944AB846E /* Pods_TwitterCloneSwiftUI_TwitterCloneSwiftUIUITests.framework */; };
+		877A434A2A19DFDF00DA8E5A /* InputValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A43492A19DFDF00DA8E5A /* InputValidator.swift */; };
 		87B089042A1871B60023B4A2 /* TwitterCloneSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B089032A1871B60023B4A2 /* TwitterCloneSwiftUIApp.swift */; };
 		87B089062A1871B60023B4A2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B089052A1871B60023B4A2 /* ContentView.swift */; };
 		87B089082A1871B70023B4A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B089072A1871B70023B4A2 /* Assets.xcassets */; };
@@ -80,6 +81,7 @@
 		2407D9779DB9B3F3384A337C /* Pods-TwitterCloneSwiftUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterCloneSwiftUITests.debug.xcconfig"; path = "Target Support Files/Pods-TwitterCloneSwiftUITests/Pods-TwitterCloneSwiftUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		2A972284DAC275A66465B0F7 /* Pods_TwitterCloneSwiftUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitterCloneSwiftUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		703C90B0ECA6607B2FEC35F7 /* Pods_TwitterCloneSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitterCloneSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		877A43492A19DFDF00DA8E5A /* InputValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputValidator.swift; sourceTree = "<group>"; };
 		87B089002A1871B60023B4A2 /* TwitterCloneSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterCloneSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B089032A1871B60023B4A2 /* TwitterCloneSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterCloneSwiftUIApp.swift; sourceTree = "<group>"; };
 		87B089052A1871B60023B4A2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				87B089622A188D0E0023B4A2 /* String+Extension.swift */,
 				87B089632A188D0E0023B4A2 /* View+Extension.swift */,
 				87B089842A190FE00023B4A2 /* Application+Extension.swift */,
+				877A43492A19DFDF00DA8E5A /* InputValidator.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -655,6 +658,7 @@
 				87B089692A188D0F0023B4A2 /* CustomErrors.swift in Sources */,
 				87B089042A1871B60023B4A2 /* TwitterCloneSwiftUIApp.swift in Sources */,
 				87B0896A2A188D0F0023B4A2 /* NSDictionary+Extension.swift in Sources */,
+				877A434A2A19DFDF00DA8E5A /* InputValidator.swift in Sources */,
 				87B0896B2A188D0F0023B4A2 /* Double+Extension.swift in Sources */,
 				87B089672A188D0F0023B4A2 /* Log.swift in Sources */,
 				87B089722A1896B70023B4A2 /* LoginView.swift in Sources */,

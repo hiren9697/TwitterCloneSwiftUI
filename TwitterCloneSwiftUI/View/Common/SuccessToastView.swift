@@ -63,6 +63,7 @@ struct SuccessToastView: View {
             Image(systemName: icon ?? type.icon)
                 .foregroundColor(iconColor ?? type.iconColor)
             Text(message)
+                .lineLimit(3)
                 .font(Font.custom(AppFont.regular.rawValue, size: 14))
                 .foregroundColor(textColor ?? type.textColor)
         }

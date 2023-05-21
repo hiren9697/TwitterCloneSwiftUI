@@ -36,7 +36,7 @@ enum SignupInputError: Error, LocalizedError, CustomStringConvertible {
         case .invalidEmail: return "Please enter valid email"
         case .invalidPassword: return "Password must be of minimum 6 characters"
         case .invalidFullname: return "Fullname must be of minimum 4 characters"
-        case .invalidUsername: return "Username must be of minimum 4 characters"
+        case .invalidUsername: return "Username must be of minimum 4 characters, and must not contain any special characters"
         }
     }
     
