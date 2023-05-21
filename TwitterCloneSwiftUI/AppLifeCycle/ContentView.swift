@@ -10,7 +10,9 @@ import SwiftUI
 // MARK: - View
 struct ContentView: View {
     var body: some View {
-        SignupView()
+        NavigationStack(root: {
+            LoginView()
+        })
             .onAppear(perform: {
                 initialSetup()
             })

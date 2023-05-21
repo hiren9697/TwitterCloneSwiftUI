@@ -18,6 +18,7 @@ struct LoginView: View {
             image
             tfs
             button
+            signupText
         }
         .frame(maxWidth: .infinity)
         .background(AppColor.blue)
@@ -72,6 +73,16 @@ extension LoginView {
             Application.shared.endEditing()
             viewModel.login()
         })
+    }
+    
+    var signupText: some View {
+        NavigationLink(destination: SignupView(),
+                       label: {
+            Text("Don't have an account **SignUp**")
+                .font(Font.custom(AppFont.regular.rawValue, size: 14))
+                .foregroundColor(AppColor.white)
+        })
+        .padding()
     }
 }
 

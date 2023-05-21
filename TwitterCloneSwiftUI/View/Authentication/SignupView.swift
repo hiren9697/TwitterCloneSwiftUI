@@ -10,6 +10,7 @@ import PhotosUI
 
 // MARK: - View
 struct SignupView: View {
+    @Environment(\.presentationMode) var presentation
     @StateObject var viewModel = SignupVM()
     @FocusState var focusedField: SignupInputFields?
     
@@ -18,10 +19,12 @@ struct SignupView: View {
             image
             tfs
             button
+            signinText
         }
         .frame(maxWidth: .infinity)
         .background(AppColor.blue)
         .ignoresSafeArea()
+        .navigationBarBackButtonHidden(true)
         .simpleToast(isPresented: $viewModel.showToast,
                      options: Application.toastOption,
                      content: { SuccessToastView(message: viewModel.inputErrorMessage, type: .failure) })
@@ -123,6 +126,18 @@ extension SignupView {
             Application.shared.endEditing()
             viewModel.signup()
         })
+    }
+    
+    var signinText: some View {
+        Button(action: {
+            presentation.wrappedValue.dismiss()
+        },
+               label: {
+            Text("Already have an account **SignIn**")
+                .font(Font.custom(AppFont.regular.rawValue, size: 14))
+                .foregroundColor(AppColor.white)
+        })
+        .padding()
     }
 }
 
