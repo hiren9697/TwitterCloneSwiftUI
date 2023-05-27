@@ -10,7 +10,7 @@ import PhotosUI
 import FirebaseAuth
 
 // MARK: - VM
-class SignupVM: ObservableObject {
+class SignupVM: APILoadingViewModel {
     @Published var profileImage: Image?
     @Published var profilePickerItem: PhotosPickerItem? {
         didSet {
@@ -21,13 +21,10 @@ class SignupVM: ObservableObject {
     @Published var password: String = ""
     @Published var fullname: String = ""
     @Published var username: String = ""
-    @Published var showToast: Bool = false
-    @Published var isLoading: Bool = false
     
     let inputValidator = AuthInputValidator()
     var profileUIImage: UIImage?
     let service = UserService()
-    var inputErrorMessage = ""
 }
 
 // MARK: - Helper method(s)
@@ -46,13 +43,12 @@ extension SignupVM {
                                                          username: username)
         switch result {
         case .success(_):
-            inputErrorMessage = ""
+            errorMessage = ""
             showToast = false
             return true
         case .failure(let error):
             Log.error("Signup input error: \(error.localizedDescription)")
-            inputErrorMessage = error.localizedDescription
-            showToast = true
+            showError(error: error)
             return false
         }
     }
@@ -91,18 +87,6 @@ extension SignupVM {
             data["profileImage"] = profileImageURL
         }
         return data
-    }
-    
-    private func showError(error: Error) {
-        inputErrorMessage = error.localizedDescription
-        showToast = true
-        isLoading = false
-    }
-    
-    private func showError(message: String) {
-        inputErrorMessage = message
-        showToast = true
-        isLoading = false
     }
 }
 

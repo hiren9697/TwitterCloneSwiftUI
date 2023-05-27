@@ -27,7 +27,7 @@ struct LoginView: View {
             .ignoresSafeArea()
             .simpleToast(isPresented: $viewModel.showToast,
                          options: Application.toastOption,
-                         content: { ToastView(message: viewModel.inputErrorMessage, type: .failure) })
+                         content: { ToastView(message: viewModel.errorMessage, type: .failure) })
             // 2. Loader
             if viewModel.isLoading {
                 LoadingView(color: AppColor.white)

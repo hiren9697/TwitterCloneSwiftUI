@@ -29,7 +29,7 @@ struct SignupView: View {
             .navigationBarBackButtonHidden(true)
             .simpleToast(isPresented: $viewModel.showToast,
                          options: Application.toastOption,
-                         content: { ToastView(message: viewModel.inputErrorMessage, type: .failure) })
+                         content: { ToastView(message: viewModel.errorMessage, type: .failure) })
             .disabled(viewModel.isLoading)
             // 2. Loader
             if viewModel.isLoading {

@@ -6,16 +6,14 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 // MARK: - VM
-class LoginVM: ObservableObject {
+class LoginVM: APILoadingViewModel {
     @Published var email: String = ""
     @Published var password: String = ""
-    @Published var showToast: Bool = false
-    @Published var isLoading: Bool = false
     
     let inputValidator = AuthInputValidator()
-    var inputErrorMessage = ""
 }
 
 // MARK: - Helper method(s)
@@ -34,8 +32,7 @@ extension LoginVM {
             return true
         case .failure(let error):
             Log.error("Login input error: \(error.localizedDescription)")
-            inputErrorMessage = error.localizedDescription
-            showToast = true
+            showError(error: error)
             return false
         }
     }
@@ -45,6 +42,9 @@ extension LoginVM {
 extension LoginVM {
     
     private func loginAPI() {
-        
+        Auth.auth().signIn(withEmail: email,
+                           password: password) { result, error in
+            
+        }
     }
 }
