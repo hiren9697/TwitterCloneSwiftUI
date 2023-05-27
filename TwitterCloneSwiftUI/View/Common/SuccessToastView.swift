@@ -35,7 +35,7 @@ enum Toast {
 }
 
 // MARK: - View
-struct SuccessToastView: View {
+struct ToastView: View {
     
     let message: String
     let type: Toast
@@ -76,8 +76,8 @@ struct SuccessToastView: View {
 }
 
 // MARK: - Preview
-struct SuccessToastView_Previews: PreviewProvider {
+struct ToastView_Previews: PreviewProvider {
     static var previews: some View {
-        SuccessToastView(message: "Sample message", type: .failure, icon: nil)
+        ToastView(message: "Sample message", type: .failure, icon: nil)
     }
 }

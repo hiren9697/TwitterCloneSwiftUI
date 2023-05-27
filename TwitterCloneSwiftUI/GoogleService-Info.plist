@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>963638450773-8sg5mh1qbougrlrktukopvqltvegcjj7.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.963638450773-8sg5mh1qbougrlrktukopvqltvegcjj7</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAOgH9Z8kBaTa2ZDoX-Ruo9S0rIzb9nRmw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>963638450773</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>hiren.TwitterCloneSwiftUI</string>
+	<key>PROJECT_ID</key>
+	<string>twittercloneswiftui-81b93</string>
+	<key>STORAGE_BUCKET</key>
+	<string>twittercloneswiftui-81b93.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:963638450773:ios:38f73919a3a9234974d2dc</string>
+</dict>
+</plist>

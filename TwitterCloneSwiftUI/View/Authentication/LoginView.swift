@@ -25,7 +25,7 @@ struct LoginView: View {
         .ignoresSafeArea()
         .simpleToast(isPresented: $viewModel.showToast,
                      options: Application.toastOption,
-                     content: { SuccessToastView(message: viewModel.inputErrorMessage, type: .failure) })
+                     content: { ToastView(message: viewModel.inputErrorMessage, type: .failure) })
     }
 }
 
