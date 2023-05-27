@@ -11,12 +11,16 @@ import FirebaseCore
 // MARK: - App
 @main
 struct TwitterCloneSwiftUIApp: App {
+    init() {
+        configuareApp()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .onAppear(perform: {
-                    configuareApp()
-                })
+//                .onAppear(perform: {
+//                    configuareApp()
+//                })
         }
     }
     

@@ -12,8 +12,10 @@ import FirebaseAuth
 class LoginVM: APILoadingViewModel {
     @Published var email: String = ""
     @Published var password: String = ""
+    @Published var currentUser: User?
     
     let inputValidator = AuthInputValidator()
+    let service = UserService()
 }
 
 // MARK: - Helper method(s)
@@ -42,9 +44,25 @@ extension LoginVM {
 extension LoginVM {
     
     private func loginAPI() {
+        isLoading = true
         Auth.auth().signIn(withEmail: email,
-                           password: password) { result, error in
-            
+                           password: password) {[weak self] result, error in
+            guard let strongSelf = self else { return }
+            strongSelf.isLoading = false
+            if let error = error {
+                strongSelf.showError(error: error)
+            } else {
+                Log.success("User logged in successfully")
+                strongSelf.service.fetchProfile { result in
+                    switch result {
+                    case .success(let user):
+                        Log.success("Fetched user's profile successfully")
+                        strongSelf.currentUser = user
+                    case .failure(let error):
+                        strongSelf.showError(error: error)
+                    }
+                }
+            }
         }
     }
 }

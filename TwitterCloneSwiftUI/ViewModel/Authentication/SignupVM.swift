@@ -21,6 +21,7 @@ class SignupVM: APILoadingViewModel {
     @Published var password: String = ""
     @Published var fullname: String = ""
     @Published var username: String = ""
+    @Published var currentUser: User?
     
     let inputValidator = AuthInputValidator()
     var profileUIImage: UIImage?
@@ -101,14 +102,16 @@ extension SignupVM {
             if let error = error {
                 Log.error("Error in registering user: \(error.localizedDescription)")
                 strongSelf.showError(error: error)
-            }
-            Log.success("Created new user successfully")
-            // 2. Store user's information
-            if let userId = result?.user.uid {
-                strongSelf.storeData(userId: userId)
+                return
             } else {
-                Log.error("Couldn't get user data in register user")
-                strongSelf.showError(message: AppMessage.somethingWentWrong)
+                Log.success("Created new user successfully")
+                // 2. Store user's information
+                if let userId = result?.user.uid {
+                    strongSelf.storeData(userId: userId)
+                } else {
+                    Log.error("Couldn't get user data in register user")
+                    strongSelf.showError(message: AppMessage.somethingWentWrong)
+                }
             }
         }
     }
@@ -134,13 +137,25 @@ extension SignupVM {
     
     private func storeUserData(userId: String,
                                profileImageUrl: String?) {
+        // 1. Store user's data
         service.storeUserInformation(userId: userId,
-                                     data: getData(userId: userId, profileImageURL: nil)) {[weak self] result in
+                                     data: getData(userId: userId,
+                                                   profileImageURL: profileImageUrl)) {[weak self] result in
             guard let strongSelf = self else { return }
             switch result {
             case .success(_):
                 Log.success("Stored user information successfully")
-                strongSelf.isLoading = false
+                // 2. Fetch user's data
+                strongSelf.service.fetchProfile {[weak self] result in
+                    self?.isLoading = false
+                    switch result {
+                    case .success(let user):
+                        self?.currentUser = user
+                    case .failure(let error):
+                        Log.error("Error in fetching user: \(error.localizedDescription)")
+                        self?.showError(error: error)
+                    }
+                }
             case .failure(let error):
                 Log.error("Error in storing user information: \(error.localizedDescription)")
                 strongSelf.showError(error: error)

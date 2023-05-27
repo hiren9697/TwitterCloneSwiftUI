@@ -9,6 +9,7 @@ import SwiftUI
 import Foundation
 import FirebaseStorage
 import FirebaseFirestore
+import FirebaseAuth
 
 // MARK: - Service
 final class UserService {
@@ -17,7 +18,7 @@ final class UserService {
     let storage = Storage.storage().reference()
 }
 
-// MARK: - Method(s)
+// MARK: - Register method(s)
 extension UserService {
     
     internal func storeUserInformation(userId: String,
@@ -63,6 +64,29 @@ extension UserService {
                 }
             }
         }
-        
+    }
+}
+
+// MARK: - Profile method(s)
+extension UserService {
+    
+    func fetchProfile(completion: @escaping (Result<User, Error>)-> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        db.collection(DatabaseCollection.users.rawValue)
+            .document(uid)
+            .getDocument { snapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                } else if let data = snapshot?.data() {
+                    let dictionary = data as NSDictionary
+                    let user = User(dictionary: dictionary)
+                    completion(.success(user))
+                } else {
+                    completion(.failure(UserProfileError.emptyData))
+                }
+            }
     }
 }

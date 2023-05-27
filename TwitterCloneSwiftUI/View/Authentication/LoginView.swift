@@ -10,6 +10,7 @@ import SwiftUI_SimpleToast
 
 // MARK: - View
 struct LoginView: View {
+    @EnvironmentObject var appState: AppState
     @StateObject var viewModel = LoginVM()
     @FocusState var focusedField: LoginInputFields?
     
@@ -31,6 +32,11 @@ struct LoginView: View {
             // 2. Loader
             if viewModel.isLoading {
                 LoadingView(color: AppColor.white)
+            }
+        }
+        .onChange(of: viewModel.currentUser) { newValue in
+            if let user = newValue {
+                appState.saveUser(user: user)
             }
         }
     }

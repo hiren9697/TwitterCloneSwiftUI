@@ -69,6 +69,8 @@
 		87D273982A22124400577DC2 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D273972A22124400577DC2 /* SearchView.swift */; };
 		87D2739A2A22125100577DC2 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D273992A22125100577DC2 /* NotificationView.swift */; };
 		87D2739C2A22125A00577DC2 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D2739B2A22125A00577DC2 /* MessageView.swift */; };
+		87D2739E2A2220D700577DC2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D2739D2A2220D700577DC2 /* User.swift */; };
+		87D273A02A22311C00577DC2 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D2739F2A22311C00577DC2 /* AppState.swift */; };
 		E0540CDED9F80D30F831133E /* Pods_TwitterCloneSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 703C90B0ECA6607B2FEC35F7 /* Pods_TwitterCloneSwiftUI.framework */; };
 /* End PBXBuildFile section */
 
@@ -157,6 +159,8 @@
 		87D273972A22124400577DC2 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		87D273992A22125100577DC2 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		87D2739B2A22125A00577DC2 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		87D2739D2A2220D700577DC2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		87D2739F2A22311C00577DC2 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		895712E161694967F0083428 /* Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.debug.xcconfig"; path = "Target Support Files/Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests/Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		98BE24B8C1E1443D7C691F65 /* Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.release.xcconfig"; path = "Target Support Files/Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests/Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AE6C8C64A38F29BCA7313B2D /* Pods-TwitterCloneSwiftUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterCloneSwiftUITests.release.xcconfig"; path = "Target Support Files/Pods-TwitterCloneSwiftUITests/Pods-TwitterCloneSwiftUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -262,6 +266,7 @@
 			children = (
 				87B089032A1871B60023B4A2 /* TwitterCloneSwiftUIApp.swift */,
 				87B089052A1871B60023B4A2 /* ContentView.swift */,
+				87D2739F2A22311C00577DC2 /* AppState.swift */,
 			);
 			path = AppLifeCycle;
 			sourceTree = "<group>";
@@ -294,6 +299,7 @@
 			children = (
 				87B0897F2A18D7D70023B4A2 /* Auth */,
 				87B089792A1898D00023B4A2 /* Common.swift */,
+				87D2739D2A2220D700577DC2 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -755,10 +761,12 @@
 				87B089722A1896B70023B4A2 /* LoginView.swift in Sources */,
 				87B089852A190FE00023B4A2 /* Application+Extension.swift in Sources */,
 				87D2739A2A22125100577DC2 /* NotificationView.swift in Sources */,
+				87D2739E2A2220D700577DC2 /* User.swift in Sources */,
 				87D273822A21B64F00577DC2 /* LoadingView.swift in Sources */,
 				87D273872A21BB3800577DC2 /* DatabaseCollections.swift in Sources */,
 				87D273962A22123300577DC2 /* FeedView.swift in Sources */,
 				87D2738B2A21CB9900577DC2 /* CommonFunctions.swift in Sources */,
+				87D273A02A22311C00577DC2 /* AppState.swift in Sources */,
 				87B089812A18D7E40023B4A2 /* LoginModel.swift in Sources */,
 				87B089682A188D0F0023B4A2 /* AppColors.swift in Sources */,
 				87B0897A2A1898D00023B4A2 /* Common.swift in Sources */,

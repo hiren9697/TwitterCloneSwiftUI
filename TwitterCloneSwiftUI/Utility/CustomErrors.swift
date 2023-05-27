@@ -73,3 +73,27 @@ extension RegisterError: LocalizedError {
     }
 }
 
+// MARK: - User Profile
+enum UserProfileError: Error {
+case emptyData
+}
+
+extension UserProfileError: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .emptyData:
+            return "Received empty data while fetching profile"
+        }
+    }
+}
+    
+extension UserProfileError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .emptyData:
+            return "Something went wrong"
+        }
+    }
+}
+
+

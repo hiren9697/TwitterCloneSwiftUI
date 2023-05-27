@@ -6,16 +6,24 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 // MARK: - View
 struct ContentView: View {
+    @StateObject var appState = AppState()
+    
     var body: some View {
         NavigationStack(root: {
-            TabBarView()
+            if appState.user == nil {
+                LoginView()
+            } else {
+                TabBarView()
+            }
         })
-            .onAppear(perform: {
-                initialSetup()
-            })
+        .environmentObject(appState)
+        .onAppear(perform: {
+            initialSetup()
+        })
     }
 }
 

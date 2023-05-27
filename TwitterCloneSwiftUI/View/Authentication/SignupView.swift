@@ -11,6 +11,7 @@ import PhotosUI
 // MARK: - View
 struct SignupView: View {
     @Environment(\.presentationMode) var presentation
+    @EnvironmentObject var appState: AppState
     @StateObject var viewModel = SignupVM()
     @FocusState var focusedField: SignupInputFields?
     
@@ -34,6 +35,11 @@ struct SignupView: View {
             // 2. Loader
             if viewModel.isLoading {
                 LoadingView(color: AppColor.red)
+            }
+        }
+        .onChange(of: viewModel.currentUser) { newValue in
+            if let user = newValue {
+                appState.saveUser(user: user)
             }
         }
     }
