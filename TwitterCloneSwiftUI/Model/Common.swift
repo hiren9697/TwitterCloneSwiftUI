@@ -10,4 +10,5 @@ import Foundation
 typealias VoidCallback = ()-> Void
 typealias StringCallback = ()-> Void
 typealias IntCallback = ()-> Void
-typealias ResultCallback = (Result<Void, Error>)-> Void
+typealias ResultVoidCallback = (Result<Void, Error>)-> Void
+typealias ResultURLCallback = (Result<URL, Error>)-> Void

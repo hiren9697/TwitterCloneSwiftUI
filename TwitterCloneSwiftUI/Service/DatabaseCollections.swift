@@ -10,3 +10,7 @@ import Foundation
 enum DatabaseCollection: String {
     case users = "users"
 }
+
+enum DatabaseStorage: String {
+    case profile = "profile"
+}

@@ -45,3 +45,31 @@ extension APIError: LocalizedError {
     }
 }
 
+// MARK: - Register Error
+enum RegisterError: Error {
+case emptyMetaData
+case emptyProfileImageUrl
+}
+
+extension RegisterError: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .emptyMetaData:
+            return "Received empty meta date while creating user"
+        case .emptyProfileImageUrl:
+            return "Received empty empty profile image url while uploading user's profile image"
+        }
+    }
+}
+    
+extension RegisterError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .emptyMetaData:
+            return "Something went wrong"
+        case .emptyProfileImageUrl:
+            return "Something went wrong"
+        }
+    }
+}
+

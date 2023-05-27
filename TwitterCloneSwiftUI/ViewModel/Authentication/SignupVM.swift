@@ -25,6 +25,7 @@ class SignupVM: ObservableObject {
     @Published var isLoading: Bool = false
     
     let inputValidator = AuthInputValidator()
+    var profileUIImage: UIImage?
     let service = UserService()
     var inputErrorMessage = ""
 }
@@ -68,6 +69,7 @@ extension SignupVM {
                     return
                 }
                 DispatchQueue.main.async {
+                    self.profileUIImage = uiImage
                     self.profileImage = Image(uiImage: uiImage)
                 }
             case .failure(let error):
@@ -119,7 +121,7 @@ extension SignupVM {
             Log.success("Created new user successfully")
             // 2. Store user's information
             if let userId = result?.user.uid {
-                strongSelf.storeUserData(userId: userId)
+                strongSelf.storeData(userId: userId)
             } else {
                 Log.error("Couldn't get user data in register user")
                 strongSelf.showError(message: AppMessage.somethingWentWrong)
@@ -127,7 +129,27 @@ extension SignupVM {
         }
     }
     
-    private func storeUserData(userId: String) {
+    private func storeData(userId: String) {
+        // 1. If user has selected image, then first store image to cloude storage and then store user's data along with that profile image's URL
+        if let image = profileUIImage {
+            service.storeProfileImage(image: image) {[weak self] result in
+                switch result {
+                case .success(let url):
+                    Log.success("Stored user's image successfully")
+                    self?.storeUserData(userId: userId, profileImageUrl: url.absoluteString)
+                case .failure(let error):
+                    Log.error("Error in saving user's image")
+                    self?.showError(error: error)
+                }
+            }
+        } else {
+        // 2. User hasn't selected image, store user's data without image
+            storeUserData(userId: userId, profileImageUrl: nil)
+        }
+    }
+    
+    private func storeUserData(userId: String,
+                               profileImageUrl: String?) {
         service.storeUserInformation(userId: userId,
                                      data: getData(userId: userId, profileImageURL: nil)) {[weak self] result in
             guard let strongSelf = self else { return }
