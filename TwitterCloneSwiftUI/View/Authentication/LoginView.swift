@@ -14,18 +14,25 @@ struct LoginView: View {
     @FocusState var focusedField: LoginInputFields?
     
     var body: some View {
-        ScrollView {
-            image
-            tfs
-            button
-            signupText
+        ZStack {
+            // 1. Content
+            ScrollView {
+                image
+                tfs
+                button
+                signupText
+            }
+            .frame(maxWidth: .infinity)
+            .background(AppColor.blue)
+            .ignoresSafeArea()
+            .simpleToast(isPresented: $viewModel.showToast,
+                         options: Application.toastOption,
+                         content: { ToastView(message: viewModel.inputErrorMessage, type: .failure) })
+            // 2. Loader
+            if viewModel.isLoading {
+                LoadingView(color: AppColor.white)
+            }
         }
-        .frame(maxWidth: .infinity)
-        .background(AppColor.blue)
-        .ignoresSafeArea()
-        .simpleToast(isPresented: $viewModel.showToast,
-                     options: Application.toastOption,
-                     content: { ToastView(message: viewModel.inputErrorMessage, type: .failure) })
     }
 }
 

@@ -15,19 +15,27 @@ struct SignupView: View {
     @FocusState var focusedField: SignupInputFields?
     
     var body: some View {
-        ScrollView {
-            image
-            tfs
-            button
-            signinText
+        ZStack {
+            // 1. Content
+            ScrollView {
+                image
+                tfs
+                button
+                signinText
+            }
+            .frame(maxWidth: .infinity)
+            .background(AppColor.blue)
+            .ignoresSafeArea()
+            .navigationBarBackButtonHidden(true)
+            .simpleToast(isPresented: $viewModel.showToast,
+                         options: Application.toastOption,
+                         content: { ToastView(message: viewModel.inputErrorMessage, type: .failure) })
+            .disabled(viewModel.isLoading)
+            // 2. Loader
+            if viewModel.isLoading {
+                LoadingView(color: AppColor.red)
+            }
         }
-        .frame(maxWidth: .infinity)
-        .background(AppColor.blue)
-        .ignoresSafeArea()
-        .navigationBarBackButtonHidden(true)
-        .simpleToast(isPresented: $viewModel.showToast,
-                     options: Application.toastOption,
-                     content: { ToastView(message: viewModel.inputErrorMessage, type: .failure) })
     }
 }
 

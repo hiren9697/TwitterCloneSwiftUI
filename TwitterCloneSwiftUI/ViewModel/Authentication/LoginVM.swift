@@ -12,6 +12,7 @@ class LoginVM: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var showToast: Bool = false
+    @Published var isLoading: Bool = false
     
     let inputValidator = AuthInputValidator()
     var inputErrorMessage = ""

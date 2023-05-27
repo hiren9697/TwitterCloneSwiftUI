@@ -71,7 +71,7 @@ extension Log {
     
     public static func info(
         _ content: Any...,
-        shouldLogContext: Bool = true,
+        shouldLogContext: Bool = false,
         file: String = #file,
         function: String = #function,
         line: Int = #line
@@ -87,7 +87,7 @@ extension Log {
     
     public static func apiRequest(
         _ content: Any...,
-        shouldLogContext: Bool = true,
+        shouldLogContext: Bool = false,
         file: String = #file,
         function: String = #function,
         line: Int = #line
@@ -103,7 +103,7 @@ extension Log {
     
     public static func apiResponse(
         _ content: Any...,
-        shouldLogContext: Bool = true,
+        shouldLogContext: Bool = false,
         file: String = #file,
         function: String = #function,
         line: Int = #line
@@ -119,7 +119,7 @@ extension Log {
     
     public static func warning(
         _ content: Any...,
-        shouldLogContext: Bool = true,
+        shouldLogContext: Bool = false,
         file: String = #file,
         function: String = #function,
         line: Int = #line
@@ -135,7 +135,7 @@ extension Log {
     
     public static func success(
         _ content: Any...,
-        shouldLogContext: Bool = true,
+        shouldLogContext: Bool = false,
         file: String = #file,
         function: String = #function,
         line: Int = #line
@@ -151,7 +151,7 @@ extension Log {
     
     public static func error(
         _ content: Any...,
-        shouldLogContext: Bool = true,
+        shouldLogContext: Bool = false,
         file: String = #file,
         function: String = #function,
         line: Int = #line
@@ -167,7 +167,7 @@ extension Log {
     
     public static func deallocate(
         _ content: Any...,
-        shouldLogContext: Bool = true,
+        shouldLogContext: Bool = false,
         file: String = #file,
         function: String = #function,
         line: Int = #line

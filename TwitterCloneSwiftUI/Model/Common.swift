@@ -10,3 +10,4 @@ import Foundation
 typealias VoidCallback = ()-> Void
 typealias StringCallback = ()-> Void
 typealias IntCallback = ()-> Void
+typealias ResultCallback = (Result<Void, Error>)-> Void
