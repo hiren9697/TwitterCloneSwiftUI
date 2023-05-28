@@ -45,3 +45,55 @@ extension APIError: LocalizedError {
     }
 }
 
+// MARK: - Register Error
+enum RegisterError: Error {
+case emptyMetaData
+case emptyProfileImageUrl
+}
+
+extension RegisterError: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .emptyMetaData:
+            return "Received empty meta date while creating user"
+        case .emptyProfileImageUrl:
+            return "Received empty empty profile image url while uploading user's profile image"
+        }
+    }
+}
+    
+extension RegisterError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .emptyMetaData:
+            return "Something went wrong"
+        case .emptyProfileImageUrl:
+            return "Something went wrong"
+        }
+    }
+}
+
+// MARK: - User Profile
+enum UserProfileError: Error {
+case emptyData
+}
+
+extension UserProfileError: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .emptyData:
+            return "Received empty data while fetching profile"
+        }
+    }
+}
+    
+extension UserProfileError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .emptyData:
+            return "Something went wrong"
+        }
+    }
+}
+
+
