@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
 // MARK: - AppState
 final class AppState: ObservableObject {
-    @Published var user: User?
+    @Published var path = NavigationPath()
+    @Published var currentUser: User?
     
     init() {
         getUser()
@@ -24,8 +26,9 @@ extension AppState {
             let encoder = JSONEncoder()
             let data = try encoder.encode(user)
             UserDefaults.standard.set(data, forKey: "user")
-            self.user = user
+            self.currentUser = user
             Log.success("Store user data locally")
+            path = NavigationPath()
         } catch {
             Log.error("Unable to Encode User \(error.localizedDescription)")
         }
@@ -36,7 +39,7 @@ extension AppState {
             do {
                 let decoder = JSONDecoder()
                 let user = try decoder.decode(User.self, from: data)
-                self.user = user
+                self.currentUser = user
                 Log.success("Found local user data")
             } catch {
                 Log.error("Unable to Decode User \(error.localizedDescription)")

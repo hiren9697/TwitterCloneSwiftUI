@@ -12,18 +12,24 @@ import FirebaseAuth
 struct ContentView: View {
     @StateObject var appState = AppState()
     
+    init() {
+        initialSetup()
+    }
+    
     var body: some View {
-        NavigationStack(root: {
-            if appState.user == nil {
-                LoginView()
-            } else {
-                TabBarView()
-            }
-        })
-        .environmentObject(appState)
-        .onAppear(perform: {
-            initialSetup()
-        })
+        if appState.currentUser == nil {
+            NavigationStack(path: $appState.path,
+                            root: {
+                LoginView(viewModel: LoginVM())
+            })
+            .environmentObject(appState)
+        } else {
+            NavigationStack(path: $appState.path,
+                            root: {
+                TabBarView(viewModel: TabBarVM())
+            })
+            .environmentObject(appState)
+        }
     }
 }
 

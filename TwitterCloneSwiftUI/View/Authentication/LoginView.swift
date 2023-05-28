@@ -11,8 +11,12 @@ import SwiftUI_SimpleToast
 // MARK: - View
 struct LoginView: View {
     @EnvironmentObject var appState: AppState
-    @StateObject var viewModel = LoginVM()
+    @StateObject var viewModel: LoginVM
     @FocusState var focusedField: LoginInputFields?
+    
+    init(viewModel: LoginVM) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         ZStack {
@@ -39,6 +43,10 @@ struct LoginView: View {
                 appState.saveUser(user: user)
             }
         }
+        .navigationDestination(for: SignupVM.self,
+                               destination: { signupVM in
+            SignupView(signupVM: signupVM)
+        })
     }
 }
 
@@ -89,7 +97,7 @@ extension LoginView {
     }
     
     var signupText: some View {
-        NavigationLink(destination: SignupView(),
+        NavigationLink(value: SignupVM(),
                        label: {
             Text("Don't have an account **SignUp**")
                 .font(Font.custom(AppFont.regular.rawValue, size: 14))
@@ -102,6 +110,6 @@ extension LoginView {
 // MARK: - Preview
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(viewModel: LoginVM())
     }
 }

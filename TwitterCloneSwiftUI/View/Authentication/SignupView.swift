@@ -12,8 +12,12 @@ import PhotosUI
 struct SignupView: View {
     @Environment(\.presentationMode) var presentation
     @EnvironmentObject var appState: AppState
-    @StateObject var viewModel = SignupVM()
+    @StateObject var viewModel: SignupVM
     @FocusState var focusedField: SignupInputFields?
+    
+    init(signupVM: SignupVM) {
+        _viewModel = StateObject(wrappedValue: signupVM)
+    }
     
     var body: some View {
         ZStack {
@@ -158,6 +162,6 @@ extension SignupView {
 // MARK: - Preview
 struct SignupView_Previews: PreviewProvider {
     static var previews: some View {
-        SignupView()
+        SignupView(signupVM: SignupVM())
     }
 }
