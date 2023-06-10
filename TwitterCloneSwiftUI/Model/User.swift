@@ -13,6 +13,9 @@ struct User: Equatable, Codable {
     let fullname: String
     let username: String
     let profileImageURLString: String
+    var profileImageURL: URL? {
+        URL(string: profileImageURLString)
+    }
     
     init(dictionary: NSDictionary) {
         id = dictionary.stringValue(key: "id")
