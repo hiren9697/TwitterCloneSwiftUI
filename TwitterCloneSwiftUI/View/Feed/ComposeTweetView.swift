@@ -15,7 +15,7 @@ struct ComposeTweetView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel = ComposeTweetVM()
     
-    let mediaGridHeight: CGFloat = (Geometry.width * 0.6) * 1.5
+    let selectedMediaGridHeight: CGFloat = (Geometry.width * 0.6) * 1.5
     
     var body: some View {
         NavigationStack {
@@ -35,10 +35,15 @@ struct ComposeTweetView: View {
                         }
                         .padding(.horizontal, 20)
                         .padding(.vertical, 5)
+                        if !viewModel.localPhotos.isEmpty {
+                            localMediaGrid
+                                .frame(height: viewModel.localPhotoSize.height)
+//                            CTLocalMediaItemView(image: viewModel.localPhotos.first!.image, size: viewModel.localPhotoSize)
+                        }
                         // 2. Media grid
                         if !viewModel.selectedImages.isEmpty {
-                            mediaGrid
-                                .frame(height: mediaGridHeight)
+                            selectedMediaGrid
+                                .frame(height: selectedMediaGridHeight)
                         }
                         
                     }
@@ -63,6 +68,9 @@ struct ComposeTweetView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     tweetButton
                 }
+            }
+            .onAppear {
+                viewModel.checkPhotoLibraryAccessPermission()
             }
         }
         
@@ -123,7 +131,26 @@ extension ComposeTweetView {
         }
     }
     
-    private var mediaGrid: some View {
+    private var localMediaGrid: some View {
+        ScrollView(.horizontal) {
+            LazyHGrid(rows: [GridItem(.fixed(100), spacing: 20)],
+                      content: {
+                // 1. Leading inset
+                Spacer()
+                    .frame(width: 20)
+                // 2. Content
+                ForEach(viewModel.localPhotos) { image in
+                    //CTSelectedMediaItemView(image: image.image)
+                    CTLocalMediaItemView(image: image.image, size: viewModel.localPhotoSize)
+                }
+                // 3. Trailing inset
+                Spacer()
+                    .frame(width: 20)
+            })
+        }
+    }
+    
+    private var selectedMediaGrid: some View {
         ScrollView(.horizontal) {
             LazyHGrid(rows: [GridItem(.flexible(), spacing: 20)],
                       content: {
@@ -132,7 +159,7 @@ extension ComposeTweetView {
                     .frame(width: 20)
                 // 2. Content
                 ForEach(viewModel.selectedImages) { image in
-                    CTMediaItemView(image: image.image)
+                    CTSelectedMediaItemView(image: image.image)
                 }
                 // 3. Trailing inset
                 Spacer()
@@ -142,8 +169,8 @@ extension ComposeTweetView {
     }
 }
 
-// MARK: - Media Item View
-struct CTMediaItemView: View {
+// MARK: - Selected Media Item View
+struct CTSelectedMediaItemView: View {
     let image: Image
     let width: CGFloat
     let height: CGFloat
@@ -161,6 +188,32 @@ struct CTMediaItemView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(width: width, height: height)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+        }
+    }
+}
+
+// MARK: - Local Media Item View
+struct CTLocalMediaItemView: View {
+    let image: Image
+    let size: CGSize
+    
+    init(image: Image, size: CGSize) {
+        self.image = image
+        self.size = size
+//        self.width = width
+//        self.height = height
+        //Log.info("Width: \(width), Height: \(height)")
+    }
+    
+    var body: some View {
+        ZStack {
+            image
+                .resizable()
+                .scaledToFill()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: size.width, height: size.height)
+                .clipped()
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         }
     }

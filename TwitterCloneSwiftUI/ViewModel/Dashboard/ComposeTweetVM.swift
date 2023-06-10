@@ -14,19 +14,28 @@ import _PhotosUI_SwiftUI
 class ComposeTweetVM: ObservableObject {
     
     @Published var text: String = ""
+    @Published var localPhotos: [LocalImage] = []
     @Published var selectedPhotoPickerItems: [PhotosPickerItem] = [] {
         didSet {
-            processImages()
+            processSelectedImages()
         }
     }
     @Published var selectedImages: [LocalImage] = []
+    let localPhotoSize: CGSize = CGSize(width: 100, height: 100)
 }
 
 // MARK: - Helper method(s)
 extension ComposeTweetVM {
     
-    private func processImages() {
-//        var images: [Image] = []
+    
+}
+
+// MARK: - Photo library
+extension ComposeTweetVM {
+    
+    /// Process images selected by user
+    /// Converts PhotosPickerItem to LocalImage
+    private func processSelectedImages() {
         selectedImages = []
         selectedPhotoPickerItems.forEach { item in
             item.loadTransferable(type: Data.self) { result in
@@ -44,6 +53,61 @@ extension ComposeTweetVM {
                 case .failure(let error):
                     Log.error("Error in loading image from PhotoPickerItem: \(error.localizedDescription)")
                     return
+                }
+            }
+        }
+    }
+    
+    /// Check photo library access permission
+    /// If permission is not determined yet, Requestes access permission
+    internal func checkPhotoLibraryAccessPermission() {
+        // 2. Request access
+        func requestPhotoAccessAuthorization() {
+            PHPhotoLibrary.requestAuthorization {[weak self] status in
+                if status == .authorized {
+                    self?.fetchLocalPhotos()
+                }
+            }
+        }
+        
+        // 1. Check current authorization status
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .authorized: fetchLocalPhotos()
+        case .notDetermined: requestPhotoAccessAuthorization()
+        default: break
+        }
+    }
+    
+    /// Fetchs some local photos
+    private func fetchLocalPhotos() {
+        
+        let imgManager = PHImageManager.default()
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.isSynchronous = true
+        requestOptions.deliveryMode = .highQualityFormat
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key:
+                                                            "creationDate", ascending: true)]
+        let fetchResult: PHFetchResult =
+        PHAsset.fetchAssets (with: .image,
+                             options: fetchOptions)
+        if fetchResult.count > 0 {
+            DispatchQueue.main.async {[weak self] in
+                guard let strongSelf = self else { return }
+                var images: [LocalImage] = []
+                for i in 0 ..< fetchResult.count {
+                    imgManager.requestImage(for: fetchResult.object(at: i),
+                                            targetSize: strongSelf.localPhotoSize,
+                                            contentMode: .aspectFill,
+                                            options: requestOptions) {[weak self] image, dictionary in
+                        if let image = image {
+                            images.append(LocalImage(image: Image(uiImage: image),
+                                                     uiImage: image))
+                            if i == fetchResult.count - 1 {
+                                self?.localPhotos = images
+                            }
+                        }
+                    }
                 }
             }
         }

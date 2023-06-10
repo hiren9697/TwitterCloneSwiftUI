@@ -2,26 +2,28 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>So you can select beautiful photos to compose tweet.</string>
 	<key>UIAppFonts</key>
-    <array>
-        <string>SF-Pro-Text-Black.otf</string>
-        <string>SF-Pro-Text-BlackItalic.otf</string>
-        <string>SF-Pro-Text-Bold.otf</string>
-        <string>SF-Pro-Text-BoldItalic.otf</string>
-        <string>SF-Pro-Text-Heavy.otf</string>
-        <string>SF-Pro-Text-HeavyItalic.otf</string>
-        <string>SF-Pro-Text-Light.otf</string>
-        <string>SF-Pro-Text-LightItalic.otf</string>
-        <string>SF-Pro-Text-Medium.otf</string>
-        <string>SF-Pro-Text-MediumItalic.otf</string>
-        <string>SF-Pro-Text-Regular.otf</string>
-        <string>SF-Pro-Text-RegularItalic.otf</string>
-        <string>SF-Pro-Text-Semibold.otf</string>
-        <string>SF-Pro-Text-SemiboldItalic.otf</string>
-        <string>SF-Pro-Text-Thin.otf</string>
-        <string>SF-Pro-Text-ThinItalic.otf</string>
-        <string>SF-Pro-Text-Ultralight.otf</string>
-        <string>SF-Pro-Text-UltralightItalic.otf</string>
-    </array>
+	<array>
+		<string>SF-Pro-Text-Black.otf</string>
+		<string>SF-Pro-Text-BlackItalic.otf</string>
+		<string>SF-Pro-Text-Bold.otf</string>
+		<string>SF-Pro-Text-BoldItalic.otf</string>
+		<string>SF-Pro-Text-Heavy.otf</string>
+		<string>SF-Pro-Text-HeavyItalic.otf</string>
+		<string>SF-Pro-Text-Light.otf</string>
+		<string>SF-Pro-Text-LightItalic.otf</string>
+		<string>SF-Pro-Text-Medium.otf</string>
+		<string>SF-Pro-Text-MediumItalic.otf</string>
+		<string>SF-Pro-Text-Regular.otf</string>
+		<string>SF-Pro-Text-RegularItalic.otf</string>
+		<string>SF-Pro-Text-Semibold.otf</string>
+		<string>SF-Pro-Text-SemiboldItalic.otf</string>
+		<string>SF-Pro-Text-Thin.otf</string>
+		<string>SF-Pro-Text-ThinItalic.otf</string>
+		<string>SF-Pro-Text-Ultralight.otf</string>
+		<string>SF-Pro-Text-UltralightItalic.otf</string>
+	</array>
 </dict>
 </plist>
