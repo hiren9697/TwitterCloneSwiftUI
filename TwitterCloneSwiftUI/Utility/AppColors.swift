@@ -18,6 +18,8 @@ struct AppColor {
     static let cFFFFFF: Color = Color("cFFFFFF")
     static let cE7ECF0: Color = Color("cE7ECF0")
     static let cCC5500: Color = Color("cCC5500")
+    static let c5A5A5A: Color = Color("c5A5A5A")
+    
     
     static let white: Color = cFFFFFF
     static let blue: Color = c1DA1F2
@@ -26,4 +28,5 @@ struct AppColor {
     static let secondaryTextColor: Color = c687684
     static let primaryBackground: Color = cFFFFFF
     static let secondaryBackground: Color = cE7ECF0
+    static let darkGray: Color = c5A5A5A
 }

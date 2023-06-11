@@ -35,7 +35,7 @@ struct ComposeTweetView: View {
                         }
                         .padding(.horizontal, 20)
                         .padding(.vertical, 5)
-                        if !viewModel.localPhotos.isEmpty {
+                        if !viewModel.localMedia.isEmpty {
                             localMediaGrid
                                 .frame(height: viewModel.localPhotoSize.height)
 //                            CTLocalMediaItemView(image: viewModel.localPhotos.first!.image, size: viewModel.localPhotoSize)
@@ -138,12 +138,13 @@ extension ComposeTweetView {
                 // 1. Leading inset
                 Spacer()
                     .frame(width: 20)
-                // 2. Content
-                ForEach(viewModel.localPhotos) { image in
-                    //CTSelectedMediaItemView(image: image.image)
-                    CTLocalMediaItemView(image: image.image, size: viewModel.localPhotoSize)
+                // 2. Camera button
+                cameraButton
+                // 3. Content
+                ForEach(viewModel.localMedia) { media in
+                    CTLocalMediaItemView(localMedia: media, size: viewModel.localPhotoSize)
                 }
-                // 3. Trailing inset
+                // 4. Trailing inset
                 Spacer()
                     .frame(width: 20)
             })
@@ -167,6 +168,13 @@ extension ComposeTweetView {
             })
         }
     }
+    
+    private var cameraButton: some View {
+        Button(action: {},
+               label: {
+            Image("ic_camera")
+        })
+    }
 }
 
 // MARK: - Selected Media Item View
@@ -188,18 +196,18 @@ struct CTSelectedMediaItemView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(width: width, height: height)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .clipShape(RoundedRectangle(cornerRadius: 17))
         }
     }
 }
 
 // MARK: - Local Media Item View
 struct CTLocalMediaItemView: View {
-    let image: Image
+    let localMedia: LocalMedia
     let size: CGSize
     
-    init(image: Image, size: CGSize) {
-        self.image = image
+    init(localMedia: LocalMedia, size: CGSize) {
+        self.localMedia = localMedia
         self.size = size
 //        self.width = width
 //        self.height = height
@@ -207,14 +215,28 @@ struct CTLocalMediaItemView: View {
     }
     
     var body: some View {
-        ZStack {
-            image
+        ZStack(alignment: .bottomTrailing) {
+            // 1. Thumbnail image if video OR Image
+            localMedia.displayImage
                 .resizable()
                 .scaledToFill()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: size.width, height: size.height)
                 .clipped()
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .clipShape(RoundedRectangle(cornerRadius: 17))
+            // 2. Duration if video
+            if let duration = localMedia.videoDuration {
+                Text(duration.displayText)
+                    .font(Font.custom(AppFont.regular.rawValue, size: 12))
+                    .foregroundColor(AppColor.white)
+                    .padding(5)
+                    .background(
+                        RoundedRectangle(cornerRadius: 5)
+                            .fill(AppColor.darkGray.opacity(0.7))
+                    )
+                    .padding(.bottom, 8)
+                    .padding(.trailing, 8)
+            }
         }
     }
 }
