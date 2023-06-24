@@ -21,7 +21,7 @@ class ComposeTweetVM: ObservableObject {
             processSelectedImages()
         }
     }
-    @Published var selectedImages: [LocalImage] = []
+    @Published var selectedMedia: [LocalMedia] = []
     let localPhotoSize: CGSize = CGSize(width: 78, height: 78)
 }
 
@@ -34,27 +34,140 @@ extension ComposeTweetVM {
 // MARK: - Photo library
 extension ComposeTweetVM {
     
-    /// Process images selected by user
-    /// Converts PhotosPickerItem to LocalImage
+    /// Process images and videos selected by user
+    /// Converts PhotosPickerItem to LocalMedia
     private func processSelectedImages() {
-        selectedImages = []
-        selectedPhotoPickerItems.forEach { item in
-            item.loadTransferable(type: Data.self) { result in
+        
+        func loadTransferable<T: Transferable>(type: T.Type,
+                                               item: PhotosPickerItem,
+                                               completion: @escaping (T)-> Void) {
+            item.loadTransferable(type: type) { result in
                 switch result {
-                case .success(let data):
-                    guard let data = data,
-                    let uiImage = UIImage(data: data) else {
-                        return
-                    }
-                    let image = Image(uiImage: uiImage)
-                    DispatchQueue.main.async {
-                        self.selectedImages.append(LocalImage(image: image,
-                                                              uiImage: uiImage))
+                case .success(let video):
+                    //Log.success("Video URL: \(video)")
+                    if let video = video {
+                        completion(video)
+                    } else {
+                        Log.error("Found nil value in loading transferable")
                     }
                 case .failure(let error):
-                    Log.error("Error in loading image from PhotoPickerItem: \(error.localizedDescription)")
-                    return
+                    Log.error("Error in loading transferable: \(error.localizedDescription)")
                 }
+            }
+        }
+        
+        func appendVideo(url: URL) {
+            DispatchQueue.main.async {
+                self.selectedMedia.append(LocalMedia(type: .video,
+                                                uiImage: url.generateThumbnail()!,
+                                                videoURL: url,
+                                                videoDurationTotalSeconds: nil))
+            }
+        }
+        
+        func appendImage(url: URL) {
+            DispatchQueue.main.async {
+                do {
+                    let imageData = try Data(contentsOf: url)
+                    if let image = UIImage(data: imageData) {
+                        self.selectedMedia.append(LocalMedia(type: .image,
+                                                             uiImage: image,
+                                                             videoDurationTotalSeconds: nil))
+                    }
+                } catch let error as NSError {
+                    Log.error("Error in fetching image data from url: \(error.localizedDescription)")
+                }
+            }
+        }
+        
+        DispatchQueue.main.async {
+            self.selectedMedia.removeAll()
+        }
+        selectedPhotoPickerItems.forEach { item in
+            if item.supportedContentTypes.contains([.video]) {
+                loadTransferable(type: VideoTransferable.self,
+                                 item: item,
+                                 completion: { video in
+                    Log.success("Video URL: \(video.url)")
+                    appendVideo(url: video.url)
+                })
+            } else if item.supportedContentTypes.contains([.mpeg]) {
+                loadTransferable(type: MpegTransferable.self,
+                                 item: item,
+                                 completion: { video in
+                    Log.success("Video URL: \(video.url)")
+                    appendVideo(url: video.url)
+                })
+            } else if item.supportedContentTypes.contains([.movie]) {
+                loadTransferable(type: MovieTransferable.self,
+                                 item: item,
+                                 completion: { video in
+                    Log.success("Video URL: \(video.url)")
+                    appendVideo(url: video.url)
+                })
+            } else if item.supportedContentTypes.contains([.mpeg4Movie]) {
+                loadTransferable(type: Mpeg4MovieTransferable.self,
+                                 item: item,
+                                 completion: { video in
+                    Log.success("Video URL: \(video.url)")
+                    appendVideo(url: video.url)
+                })
+            } else if item.supportedContentTypes.contains([.video]) {
+                loadTransferable(type: VideoTransferable.self,
+                                 item: item,
+                                 completion: { video in
+                    Log.success("Video URL: \(video.url)")
+                    appendVideo(url: video.url)
+                })
+            } else if item.supportedContentTypes.contains([.quickTimeMovie]) {
+                loadTransferable(type: QuickTimeMovieTransferable.self,
+                                 item: item,
+                                 completion: { video in
+                    Log.success("Video URL: \(video.url)")
+                    appendVideo(url: video.url)
+                })
+            } else if item.supportedContentTypes.contains([.mpeg2Video]) {
+                loadTransferable(type: Mpeg2VideoTransferable.self,
+                                 item: item,
+                                 completion: { video in
+                    Log.success("Video URL: \(video.url)")
+                    appendVideo(url: video.url)
+                })
+            } else if item.supportedContentTypes.contains([.appleProtectedMPEG4Video]) {
+                loadTransferable(type: AppleProtectedMpeg4VideoTransferable.self,
+                                 item: item,
+                                 completion: { video in
+                    Log.success("Video URL: \(video.url)")
+                    appendVideo(url: video.url)
+                })
+            } else if item.supportedContentTypes.contains([.jpeg]) {
+                loadTransferable(type: JpegTransferable.self,
+                                 item: item,
+                                 completion: { image in
+                    Log.success("Image URL: \(image.url)")
+                    appendImage(url: image.url)
+                })
+            } else if item.supportedContentTypes.contains([.png]) {
+                loadTransferable(type: PngTransferable.self,
+                                 item: item,
+                                 completion: { image in
+                    Log.success("Image URL: \(image.url)")
+                    appendImage(url: image.url)
+                })
+            }
+            else if item.supportedContentTypes.contains([.data]) {
+                loadTransferable(type: Data.self,
+                                 item: item,
+                                 completion: { data in
+                    guard let uiImage = UIImage(data: data) else {
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        self.selectedMedia.append(LocalMedia(type: .image,
+                                                             uiImage: uiImage,
+                                                             videoDurationTotalSeconds: nil))
+                    }
+                })
             }
         }
     }
@@ -93,8 +206,7 @@ extension ComposeTweetVM {
                                     options: requestOptions) {[weak self] image, dictionary in
                 if let image = image {
                     DispatchQueue.main.async {[weak self] in
-                        self?.localMedia.append(LocalMedia(displayImage: Image(uiImage: image),
-                                                           type: .image,
+                        self?.localMedia.append(LocalMedia(type: .image,
                                                            uiImage: image,
                                                            videoDurationTotalSeconds: nil))
                     }
@@ -105,13 +217,12 @@ extension ComposeTweetVM {
         func processVideoAsset(asset: PHAsset) {
             imgManager.requestAVAsset(forVideo: asset,
                                       options: videoOptions) {[weak self] asset, audio, dictionary in
-                print(dictionary)
+                //print(dictionary)
                 if let urlAsset = asset as? AVURLAsset {
                     let totalSeconds = CMTimeGetSeconds(urlAsset.duration)
                     if let thumbnailImage = urlAsset.url.generateThumbnail() {
                         DispatchQueue.main.async {[weak self] in
-                            self?.localMedia.append(LocalMedia(displayImage: Image(uiImage: thumbnailImage),
-                                                               type: .video,
+                            self?.localMedia.append(LocalMedia(type: .image,
                                                                uiImage: thumbnailImage,
                                                                videoURL: urlAsset.url,
                                                                videoDurationTotalSeconds: totalSeconds))

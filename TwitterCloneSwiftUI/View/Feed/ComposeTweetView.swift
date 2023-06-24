@@ -14,7 +14,7 @@ struct ComposeTweetView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel = ComposeTweetVM()
-    
+    let selectedMediaGridWidth: CGFloat = (Geometry.width * 0.6)
     let selectedMediaGridHeight: CGFloat = (Geometry.width * 0.6) * 1.5
     
     var body: some View {
@@ -35,13 +35,12 @@ struct ComposeTweetView: View {
                         }
                         .padding(.horizontal, 20)
                         .padding(.vertical, 5)
-                        if !viewModel.localMedia.isEmpty {
+                        if !viewModel.localMedia.isEmpty && viewModel.selectedMedia.isEmpty {
                             localMediaGrid
                                 .frame(height: viewModel.localPhotoSize.height)
-//                            CTLocalMediaItemView(image: viewModel.localPhotos.first!.image, size: viewModel.localPhotoSize)
                         }
                         // 2. Media grid
-                        if !viewModel.selectedImages.isEmpty {
+                        if !viewModel.selectedMedia.isEmpty {
                             selectedMediaGrid
                                 .frame(height: selectedMediaGridHeight)
                         }
@@ -54,6 +53,13 @@ struct ComposeTweetView: View {
                                  maxSelectionCount: 2,
                                  label: {
                         Image("ic_image")
+                            .padding(.horizontal)
+                    })
+                    PhotosPicker(selection: $viewModel.selectedPhotoPickerItems,
+                                 maxSelectionCount: 2,
+                                 label: {
+                        Image("ic_camera")
+                            .padding(.horizontal)
                     })
                     Spacer()
                 }
@@ -159,8 +165,13 @@ extension ComposeTweetView {
                 Spacer()
                     .frame(width: 20)
                 // 2. Content
-                ForEach(viewModel.selectedImages) { image in
-                    CTSelectedMediaItemView(image: image.image)
+                ForEach(viewModel.selectedMedia) { media in
+                    CTSelectedMediaItemView(media: media,
+                                            action: {
+                        if let index = viewModel.selectedMedia.firstIndex(where: { $0 == media }) {
+                            viewModel.selectedMedia.remove(at: index)
+                        }
+                    })
                 }
                 // 3. Trailing inset
                 Spacer()
@@ -172,6 +183,13 @@ extension ComposeTweetView {
     private var cameraButton: some View {
         Button(action: {},
                label: {
+            Image("ic_camera_with_background")
+        })
+    }
+    
+    private var photosButton: some View {
+        Button(action: {},
+               label: {
             Image("ic_camera")
         })
     }
@@ -179,24 +197,32 @@ extension ComposeTweetView {
 
 // MARK: - Selected Media Item View
 struct CTSelectedMediaItemView: View {
-    let image: Image
+    let media: LocalMedia
     let width: CGFloat
     let height: CGFloat
+    let action: VoidCallback
     
-    init(image: Image) {
-        self.image = image
+    init(media: LocalMedia,
+         action: @escaping VoidCallback) {
+        self.media = media
         self.width = (Geometry.width * 0.6)
         self.height = (Geometry.width * 0.6) * 2
-        Log.info("Width: \(width), Height: \(height)")
+        self.action = action
+        //Log.info("Width: \(width), Height: \(height)")
     }
     
     var body: some View {
-        ZStack {
-            image
+        ZStack(alignment: .center) {
+            media.displayImage
                 .resizable()
                 .scaledToFill()
                 .frame(width: width, height: height)
                 .clipShape(RoundedRectangle(cornerRadius: 17))
+            Button(action: action,
+                   label: {
+                //Image("ic_close")
+                Text("Close")
+            })
         }
     }
 }

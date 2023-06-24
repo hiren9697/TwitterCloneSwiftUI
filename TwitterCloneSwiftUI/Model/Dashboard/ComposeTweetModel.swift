@@ -14,6 +14,25 @@ struct LocalImage: Identifiable {
     let uiImage: UIImage
 }
 
+struct Video: Transferable {
+    let url: URL
+    
+    static var transferRepresentation: some TransferRepresentation {
+        FileRepresentation(contentType: .mpeg4Movie) { movie in
+            SentTransferredFile(movie.url)
+        } importing: { received in
+            let copy = URL.documentsDirectory.appending(path: "movie.mp4")
+            
+            if FileManager.default.fileExists(atPath: copy.path()) {
+                try FileManager.default.removeItem(at: copy)
+            }
+            
+            try FileManager.default.copyItem(at: received.file, to: copy)
+            return Self.init(url: copy)
+        }
+    }
+}
+
 struct VideoDuration {
     let totalSeconds: Float64
     let hour: Int
@@ -38,20 +57,24 @@ struct VideoDuration {
     }
 }
 
-struct LocalMedia: Identifiable {
+struct LocalMedia: Identifiable, Equatable {
     let id = UUID().uuidString
-    let displayImage: Image
     let type: PHAssetMediaType
-    let uiImage: UIImage?
+    let uiImage: UIImage
     let videoURL: URL?
     let videoDuration: VideoDuration?
+    var displayImage: Image {
+        Image(uiImage: uiImage)
+    }
     
-    init(displayImage: Image,
-         type: PHAssetMediaType,
-         uiImage: UIImage? = nil,
+    static func == (lhs: LocalMedia, rhs: LocalMedia) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    init(type: PHAssetMediaType,
+         uiImage: UIImage,
          videoURL: URL? = nil,
          videoDurationTotalSeconds: Float64?) {
-        self.displayImage = displayImage
         self.type = type
         self.uiImage = uiImage
         self.videoURL = videoURL
