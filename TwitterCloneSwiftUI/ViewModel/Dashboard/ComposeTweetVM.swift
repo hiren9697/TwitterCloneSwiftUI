@@ -15,13 +15,13 @@ class ComposeTweetVM: ObservableObject {
     
     @Published var text: String = ""
     //@Published var localMedia: [LocalImage] = []
-    @Published var localMedia: [LocalMedia] = []
+    @Published var localMedia: [LocalMediaRepresentable] = []
     @Published var selectedPhotoPickerItems: [PhotosPickerItem] = [] {
         didSet {
             processSelectedImages()
         }
     }
-    @Published var selectedMedia: [LocalMedia] = []
+    @Published var selectedMedia: [LocalMediaRepresentable] = []
     let localPhotoSize: CGSize = CGSize(width: 78, height: 78)
 }
 
@@ -58,10 +58,14 @@ extension ComposeTweetVM {
         
         func appendVideo(url: URL) {
             DispatchQueue.main.async {
-                self.selectedMedia.append(LocalMedia(type: .video,
-                                                uiImage: url.generateThumbnail()!,
-                                                videoURL: url,
-                                                videoDurationTotalSeconds: nil))
+                if let thumbnailImage = url.generateThumbnail() {
+                    let localVideoMedia = LocalVideoMedia(thumbnailImage: thumbnailImage,
+                                                          url: url,
+                                                          videoDuration: nil)
+                    self.selectedMedia.append(LocalMediaRepresentable(videoMedia: localVideoMedia))
+                } else {
+                    Log.error("Couldn't generate thumbnail with URL: \(url)")
+                }
             }
         }
         
@@ -70,9 +74,8 @@ extension ComposeTweetVM {
                 do {
                     let imageData = try Data(contentsOf: url)
                     if let image = UIImage(data: imageData) {
-                        self.selectedMedia.append(LocalMedia(type: .image,
-                                                             uiImage: image,
-                                                             videoDurationTotalSeconds: nil))
+                        let localImageMedia = LocalImageMedia(uiImage: image)
+                        self.selectedMedia.append(LocalMediaRepresentable(imageMedia: localImageMedia))
                     }
                 } catch let error as NSError {
                     Log.error("Error in fetching image data from url: \(error.localizedDescription)")
@@ -163,9 +166,8 @@ extension ComposeTweetVM {
                         return
                     }
                     DispatchQueue.main.async {
-                        self.selectedMedia.append(LocalMedia(type: .image,
-                                                             uiImage: uiImage,
-                                                             videoDurationTotalSeconds: nil))
+                        let localImageMedia = LocalImageMedia(uiImage: uiImage)
+                        self.selectedMedia.append(LocalMediaRepresentable(imageMedia: localImageMedia))
                     }
                 })
             }
@@ -206,9 +208,8 @@ extension ComposeTweetVM {
                                     options: requestOptions) {[weak self] image, dictionary in
                 if let image = image {
                     DispatchQueue.main.async {[weak self] in
-                        self?.localMedia.append(LocalMedia(type: .image,
-                                                           uiImage: image,
-                                                           videoDurationTotalSeconds: nil))
+                        let localImageMedia = LocalImageMedia(uiImage: image)
+                        self?.localMedia.append(LocalMediaRepresentable(imageMedia: localImageMedia))
                     }
                 }
             }
@@ -222,10 +223,10 @@ extension ComposeTweetVM {
                     let totalSeconds = CMTimeGetSeconds(urlAsset.duration)
                     if let thumbnailImage = urlAsset.url.generateThumbnail() {
                         DispatchQueue.main.async {[weak self] in
-                            self?.localMedia.append(LocalMedia(type: .image,
-                                                               uiImage: thumbnailImage,
-                                                               videoURL: urlAsset.url,
-                                                               videoDurationTotalSeconds: totalSeconds))
+                            let localVideoMedia = LocalVideoMedia(thumbnailImage: thumbnailImage,
+                                                                  url: urlAsset.url,
+                                                                  videoDuration: VideoDuration(totalSeconds: totalSeconds))
+                            self?.localMedia.append(LocalMediaRepresentable(videoMedia: localVideoMedia))
                         }
                     }
                 }

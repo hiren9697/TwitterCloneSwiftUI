@@ -197,12 +197,12 @@ extension ComposeTweetView {
 
 // MARK: - Selected Media Item View
 struct CTSelectedMediaItemView: View {
-    let media: LocalMedia
+    let media: LocalMediaRepresentable
     let width: CGFloat
     let height: CGFloat
     let action: VoidCallback
     
-    init(media: LocalMedia,
+    init(media: LocalMediaRepresentable,
          action: @escaping VoidCallback) {
         self.media = media
         self.width = (Geometry.width * 0.6)
@@ -212,27 +212,31 @@ struct CTSelectedMediaItemView: View {
     }
     
     var body: some View {
-        ZStack(alignment: .center) {
-            media.displayImage
-                .resizable()
-                .scaledToFill()
-                .frame(width: width, height: height)
-                .clipShape(RoundedRectangle(cornerRadius: 17))
-            Button(action: action,
-                   label: {
-                //Image("ic_close")
-                Text("Close")
-            })
+        if let displayImage = media.displayImage {
+            ZStack(alignment: .center) {
+                displayImage
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: width, height: height)
+                    .clipShape(RoundedRectangle(cornerRadius: 17))
+                Button(action: action,
+                       label: {
+                    //Image("ic_close")
+                    Text("Close")
+                })
+            }
+        } else {
+            EmptyView()
         }
     }
 }
 
 // MARK: - Local Media Item View
 struct CTLocalMediaItemView: View {
-    let localMedia: LocalMedia
+    let localMedia: LocalMediaRepresentable
     let size: CGSize
     
-    init(localMedia: LocalMedia, size: CGSize) {
+    init(localMedia: LocalMediaRepresentable, size: CGSize) {
         self.localMedia = localMedia
         self.size = size
 //        self.width = width
@@ -241,28 +245,33 @@ struct CTLocalMediaItemView: View {
     }
     
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            // 1. Thumbnail image if video OR Image
-            localMedia.displayImage
-                .resizable()
-                .scaledToFill()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: size.width, height: size.height)
-                .clipped()
-                .clipShape(RoundedRectangle(cornerRadius: 17))
-            // 2. Duration if video
-            if let duration = localMedia.videoDuration {
-                Text(duration.displayText)
-                    .font(Font.custom(AppFont.regular.rawValue, size: 12))
-                    .foregroundColor(AppColor.white)
-                    .padding(5)
-                    .background(
-                        RoundedRectangle(cornerRadius: 5)
-                            .fill(AppColor.darkGray.opacity(0.7))
-                    )
-                    .padding(.bottom, 8)
-                    .padding(.trailing, 8)
+        if let displayImage = localMedia.displayImage {
+            ZStack(alignment: .bottomTrailing) {
+                // 1. Thumbnail image if video OR Image
+                displayImage
+                    .resizable()
+                    .scaledToFill()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: size.width, height: size.height)
+                    .clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: 17))
+                // 2. Duration if video
+                if let videoMedia = localMedia.videoMedia,
+                    let duration = videoMedia.videoDuration {
+                    Text(duration.displayText)
+                        .font(Font.custom(AppFont.regular.rawValue, size: 12))
+                        .foregroundColor(AppColor.white)
+                        .padding(5)
+                        .background(
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(AppColor.darkGray.opacity(0.7))
+                        )
+                        .padding(.bottom, 8)
+                        .padding(.trailing, 8)
+                }
             }
+        } else {
+            EmptyView()
         }
     }
 }

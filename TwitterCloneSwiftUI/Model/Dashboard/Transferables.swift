@@ -9,25 +9,6 @@ import Foundation
 import SwiftUI
 import Photos
 
-//struct VideoFileTransferable<T: Sendable>: Transferable {
-//    let url: URL
-//    
-//    static var transferRepresentation: some TransferRepresentation {
-//        FileRepresentation(contentType: T) { movie in
-//            SentTransferredFile(movie.url)
-//        } importing: { received in
-//            let copy = URL.documentsDirectory.appending(path: "movie.mp4")
-//            
-//            if FileManager.default.fileExists(atPath: copy.path()) {
-//                try FileManager.default.removeItem(at: copy)
-//            }
-//            
-//            try FileManager.default.copyItem(at: received.file, to: copy)
-//            return Self.init(url: copy)
-//        }
-//    }
-//}
-
 struct JpegTransferable: Transferable {
     let url: URL
     

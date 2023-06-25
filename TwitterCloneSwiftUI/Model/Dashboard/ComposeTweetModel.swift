@@ -57,31 +57,36 @@ struct VideoDuration {
     }
 }
 
-struct LocalMedia: Identifiable, Equatable {
+struct LocalMediaRepresentable: Identifiable, Equatable {
     let id = UUID().uuidString
-    let type: PHAssetMediaType
-    let uiImage: UIImage
-    let videoURL: URL?
-    let videoDuration: VideoDuration?
-    var displayImage: Image {
-        Image(uiImage: uiImage)
-    }
-    
-    static func == (lhs: LocalMedia, rhs: LocalMedia) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-    init(type: PHAssetMediaType,
-         uiImage: UIImage,
-         videoURL: URL? = nil,
-         videoDurationTotalSeconds: Float64?) {
-        self.type = type
-        self.uiImage = uiImage
-        self.videoURL = videoURL
-        if let videoDurationTotalSeconds = videoDurationTotalSeconds {
-            self.videoDuration = VideoDuration(totalSeconds: videoDurationTotalSeconds)
+    let imageMedia: LocalImageMedia?
+    let videoMedia: LocalVideoMedia?
+    var displayImage: Image? {
+        if let imageMedia = imageMedia {
+            return Image(uiImage: imageMedia.uiImage)
+        } else if let videoMedia = videoMedia {
+            return Image(uiImage: videoMedia.thumbnailImage)
         } else {
-            self.videoDuration = nil
+            return nil
         }
     }
+    static func == (lhs: LocalMediaRepresentable, rhs: LocalMediaRepresentable) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    init(imageMedia: LocalImageMedia? = nil,
+         videoMedia: LocalVideoMedia? = nil) {
+        self.imageMedia = imageMedia
+        self.videoMedia = videoMedia
+    }
+}
+
+struct LocalImageMedia {
+    let uiImage: UIImage
+}
+
+struct LocalVideoMedia {
+    let thumbnailImage: UIImage
+    let url: URL
+    let videoDuration: VideoDuration?
 }
