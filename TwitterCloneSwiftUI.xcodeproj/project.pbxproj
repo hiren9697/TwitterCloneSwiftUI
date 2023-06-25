@@ -13,7 +13,11 @@
 		871119962A236C6A0061B5B1 /* FeedVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871119952A236C6A0061B5B1 /* FeedVM.swift */; };
 		871119982A236CA20061B5B1 /* ComposeTweetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871119972A236CA20061B5B1 /* ComposeTweetView.swift */; };
 		8711199A2A236D5E0061B5B1 /* ComposeTweetVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871119992A236D5E0061B5B1 /* ComposeTweetVM.swift */; };
+		87773B432A5955050099549A /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87773B422A5955050099549A /* AsyncOperation.swift */; };
+		87773B452A5955820099549A /* ImageUploadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87773B442A5955820099549A /* ImageUploadOperation.swift */; };
+		87773B472A5961190099549A /* MediaUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87773B462A5961190099549A /* MediaUpload.swift */; };
 		8779F8F62A47EEFF00BA7EAE /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8779F8F52A47EEFF00BA7EAE /* URLExtension.swift */; };
+		8779F8F82A48607A00BA7EAE /* TweetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8779F8F72A48607A00BA7EAE /* TweetService.swift */; };
 		877A434A2A19DFDF00DA8E5A /* InputValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A43492A19DFDF00DA8E5A /* InputValidator.swift */; };
 		878A46DE2A2FAB5200659522 /* ComposeTweetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878A46DD2A2FAB5200659522 /* ComposeTweetModel.swift */; };
 		87B089042A1871B60023B4A2 /* TwitterCloneSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B089032A1871B60023B4A2 /* TwitterCloneSwiftUIApp.swift */; };
@@ -106,7 +110,11 @@
 		871119952A236C6A0061B5B1 /* FeedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVM.swift; sourceTree = "<group>"; };
 		871119972A236CA20061B5B1 /* ComposeTweetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeTweetView.swift; sourceTree = "<group>"; };
 		871119992A236D5E0061B5B1 /* ComposeTweetVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeTweetVM.swift; sourceTree = "<group>"; };
+		87773B422A5955050099549A /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
+		87773B442A5955820099549A /* ImageUploadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploadOperation.swift; sourceTree = "<group>"; };
+		87773B462A5961190099549A /* MediaUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaUpload.swift; sourceTree = "<group>"; };
 		8779F8F52A47EEFF00BA7EAE /* URLExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtension.swift; sourceTree = "<group>"; };
+		8779F8F72A48607A00BA7EAE /* TweetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetService.swift; sourceTree = "<group>"; };
 		877A43492A19DFDF00DA8E5A /* InputValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputValidator.swift; sourceTree = "<group>"; };
 		878A46DD2A2FAB5200659522 /* ComposeTweetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeTweetModel.swift; sourceTree = "<group>"; };
 		87B089002A1871B60023B4A2 /* TwitterCloneSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterCloneSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,6 +227,16 @@
 				871119992A236D5E0061B5B1 /* ComposeTweetVM.swift */,
 			);
 			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		87773B412A5954F80099549A /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				87773B422A5955050099549A /* AsyncOperation.swift */,
+				87773B442A5955820099549A /* ImageUploadOperation.swift */,
+				87773B462A5961190099549A /* MediaUpload.swift */,
+			);
+			path = Operations;
 			sourceTree = "<group>";
 		};
 		878A46DC2A2FAB3F00659522 /* Dashboard */ = {
@@ -444,8 +462,10 @@
 		87D273832A21BA9B00577DC2 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				87773B412A5954F80099549A /* Operations */,
 				87D273842A21BAAB00577DC2 /* UserService.swift */,
 				87D273862A21BB3800577DC2 /* DatabaseCollections.swift */,
+				8779F8F72A48607A00BA7EAE /* TweetService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -773,6 +793,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87773B452A5955820099549A /* ImageUploadOperation.swift in Sources */,
 				87B089872A1926D90023B4A2 /* SignupView.swift in Sources */,
 				87B0896F2A188D0F0023B4A2 /* AppFonts.swift in Sources */,
 				87B089062A1871B60023B4A2 /* ContentView.swift in Sources */,
@@ -789,6 +810,7 @@
 				87B089692A188D0F0023B4A2 /* CustomErrors.swift in Sources */,
 				87B089042A1871B60023B4A2 /* TwitterCloneSwiftUIApp.swift in Sources */,
 				87D273892A21C24000577DC2 /* AppMessages.swift in Sources */,
+				87773B472A5961190099549A /* MediaUpload.swift in Sources */,
 				87B0896A2A188D0F0023B4A2 /* NSDictionary+Extension.swift in Sources */,
 				877A434A2A19DFDF00DA8E5A /* InputValidator.swift in Sources */,
 				8711199A2A236D5E0061B5B1 /* ComposeTweetVM.swift in Sources */,
@@ -807,6 +829,7 @@
 				87D273872A21BB3800577DC2 /* DatabaseCollections.swift in Sources */,
 				871119942A2314380061B5B1 /* TabBarVM.swift in Sources */,
 				8779F8F62A47EEFF00BA7EAE /* URLExtension.swift in Sources */,
+				87773B432A5955050099549A /* AsyncOperation.swift in Sources */,
 				87D273962A22123300577DC2 /* FeedView.swift in Sources */,
 				87D2738B2A21CB9900577DC2 /* CommonFunctions.swift in Sources */,
 				87D273A02A22311C00577DC2 /* AppState.swift in Sources */,
@@ -817,6 +840,7 @@
 				87B089662A188D0F0023B4A2 /* Constants.swift in Sources */,
 				87B0897E2A18D7750023B4A2 /* LoginVM.swift in Sources */,
 				87B089892A192A390023B4A2 /* SignupModel.swift in Sources */,
+				8779F8F82A48607A00BA7EAE /* TweetService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -973,13 +997,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TwitterCloneSwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TwitterCloneSwiftUI/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "So you can select beautiful photos to compose tweet.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -993,6 +1020,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hiren.TwitterCloneSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1005,13 +1033,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TwitterCloneSwiftUI/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TwitterCloneSwiftUI/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "So you can select beautiful photos to compose tweet.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1025,6 +1055,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hiren.TwitterCloneSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1037,13 +1068,15 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = hiren.TwitterCloneSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1057,13 +1090,15 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = hiren.TwitterCloneSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1076,12 +1111,14 @@
 			baseConfigurationReference = 895712E161694967F0083428 /* Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = hiren.TwitterCloneSwiftUIUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1094,12 +1131,14 @@
 			baseConfigurationReference = 98BE24B8C1E1443D7C691F65 /* Pods-TwitterCloneSwiftUI-TwitterCloneSwiftUIUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = hiren.TwitterCloneSwiftUIUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

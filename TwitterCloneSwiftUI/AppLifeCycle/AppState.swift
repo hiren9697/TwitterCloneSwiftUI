@@ -40,7 +40,7 @@ extension AppState {
                 let decoder = JSONDecoder()
                 let user = try decoder.decode(User.self, from: data)
                 self.currentUser = user
-                Log.success("Found local user data")
+                Log.success("Found local user data: \(user.logPropertiesWithValue())")
             } catch {
                 Log.error("Unable to Decode User \(error.localizedDescription)")
             }

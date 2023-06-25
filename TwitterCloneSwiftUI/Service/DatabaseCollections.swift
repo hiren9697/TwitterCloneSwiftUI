@@ -9,8 +9,10 @@ import Foundation
 
 enum DatabaseCollection: String {
     case users = "users"
+    case tweets = "tweets"
 }
 
 enum DatabaseStorage: String {
     case profile = "profile"
+    case tweet = "tweet"
 }

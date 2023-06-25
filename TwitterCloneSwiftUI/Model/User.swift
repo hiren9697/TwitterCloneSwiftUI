@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Equatable, Codable {
+struct User: Equatable, Codable, Mirrorable {
     let id: String
     let email: String
     let fullname: String
@@ -18,7 +18,7 @@ struct User: Equatable, Codable {
     }
     
     init(dictionary: NSDictionary) {
-        id = dictionary.stringValue(key: "id")
+        id = dictionary.stringValue(key: "userId")
         email = dictionary.stringValue(key: "email")
         fullname = dictionary.stringValue(key: "fullname")
         username = dictionary.stringValue(key: "username")

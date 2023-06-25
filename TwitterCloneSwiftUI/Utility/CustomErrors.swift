@@ -96,4 +96,25 @@ extension UserProfileError: LocalizedError {
     }
 }
 
+// MARK: - Errors
+enum MediaUploadError: Error {
+    case imageConversion
+}
 
+extension MediaUploadError: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .imageConversion:
+            return "Can't convert image to data"
+        }
+    }
+}
+
+extension MediaUploadError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .imageConversion:
+            return "Something went wrong"
+        }
+    }
+}

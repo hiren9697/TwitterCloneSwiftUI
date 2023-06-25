@@ -10,6 +10,7 @@ import SwiftUI
 // MARK: - View
 struct FeedView: View {
     
+    @EnvironmentObject var appState: AppState
     @StateObject var viewModel = FeedVM()
     
     var body: some View {
@@ -30,7 +31,12 @@ struct FeedView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .sheet(isPresented: $viewModel.isTweetComposePresented) {
-            ComposeTweetView()
+            if let currentUser = appState.currentUser {
+                ComposeTweetView(viewModel: ComposeTweetVM(user: currentUser))
+            } else {
+                // Show toast here
+                //viewModel.
+            }
         }
     }
 }

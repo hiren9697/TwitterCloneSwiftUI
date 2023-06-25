@@ -58,7 +58,8 @@ struct VideoDuration {
 }
 
 struct LocalMediaRepresentable: Identifiable, Equatable {
-    let id = UUID().uuidString
+    let localIdentifier: String
+    var id: String { localIdentifier }
     let imageMedia: LocalImageMedia?
     let videoMedia: LocalVideoMedia?
     var displayImage: Image? {
@@ -71,11 +72,13 @@ struct LocalMediaRepresentable: Identifiable, Equatable {
         }
     }
     static func == (lhs: LocalMediaRepresentable, rhs: LocalMediaRepresentable) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.localIdentifier == rhs.localIdentifier
     }
     
-    init(imageMedia: LocalImageMedia? = nil,
+    init(localIdentifier: String,
+         imageMedia: LocalImageMedia? = nil,
          videoMedia: LocalVideoMedia? = nil) {
+        self.localIdentifier = localIdentifier
         self.imageMedia = imageMedia
         self.videoMedia = videoMedia
     }

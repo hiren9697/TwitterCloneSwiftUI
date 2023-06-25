@@ -13,57 +13,74 @@ import SDWebImageSwiftUI
 struct ComposeTweetView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.presentationMode) var presentationMode
-    @StateObject var viewModel = ComposeTweetVM()
+    @StateObject var viewModel: ComposeTweetVM
     let selectedMediaGridWidth: CGFloat = (Geometry.width * 0.6)
     let selectedMediaGridHeight: CGFloat = (Geometry.width * 0.6) * 1.5
     
+    init(viewModel: ComposeTweetVM) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     var body: some View {
         NavigationStack {
-            VStack() {
+            ZStack {
                 // 1. Content
-                ScrollView {
-                    VStack {
-                        // 1. Image / Tweet text
-                        HStack(alignment: .top) {
-                            // 1. Profile Image
-                            WebImage(url: appState.currentUser?.profileImageURL)
-                                .resizable()
-                                .frame(width: 37, height: 37)
-                                .clipShape(Circle())
-                            // 2. Tweet text box
-                            tweetTextBox
+                VStack() {
+                    // 1. Content
+                    ScrollView {
+                        VStack {
+                            // 1. Image / Tweet text
+                            HStack(alignment: .top) {
+                                // 1. Profile Image
+                                WebImage(url: appState.currentUser?.profileImageURL)
+                                    .resizable()
+                                    .frame(width: 37, height: 37)
+                                    .clipShape(Circle())
+                                // 2. Tweet text box
+                                tweetTextBox
+                            }
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 5)
+                            // 2. Local media grid
+                            /// Shows only if user hasn't selected any media
+                            if !viewModel.localMedia.isEmpty && viewModel.selectedMedia.isEmpty {
+                                localMediaGrid
+                                    .frame(height: viewModel.localPhotoSize.height)
+                            }
+                            // 3. Selected media grid
+                            if !viewModel.selectedMedia.isEmpty {
+                                selectedMediaGrid
+                                    .frame(height: selectedMediaGridHeight)
+                            }
+                            
                         }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 5)
-                        if !viewModel.localMedia.isEmpty && viewModel.selectedMedia.isEmpty {
-                            localMediaGrid
-                                .frame(height: viewModel.localPhotoSize.height)
-                        }
-                        // 2. Media grid
-                        if !viewModel.selectedMedia.isEmpty {
-                            selectedMediaGrid
-                                .frame(height: selectedMediaGridHeight)
-                        }
-                        
                     }
+                    // 2. Add Image
+                    HStack {
+                        // 1. Photos
+                        PhotosPicker(selection: $viewModel.selectedPhotoPickerItems,
+                                     maxSelectionCount: 3,
+                                     photoLibrary: PHPhotoLibrary.shared(),
+                                     label: {
+                            Image("ic_image")
+                                .padding(.horizontal)
+                        })
+                        // 2. Camera
+                        PhotosPicker(selection: $viewModel.selectedPhotoPickerItems,
+                                     maxSelectionCount: 3,
+                                     photoLibrary: PHPhotoLibrary.shared(),
+                                     label: {
+                            Image("ic_camera")
+                                .padding(.horizontal)
+                        })
+                        Spacer()
+                    }
+                    .padding()
                 }
-                // 2. Add Image
-                HStack {
-                    PhotosPicker(selection: $viewModel.selectedPhotoPickerItems,
-                                 maxSelectionCount: 2,
-                                 label: {
-                        Image("ic_image")
-                            .padding(.horizontal)
-                    })
-                    PhotosPicker(selection: $viewModel.selectedPhotoPickerItems,
-                                 maxSelectionCount: 2,
-                                 label: {
-                        Image("ic_camera")
-                            .padding(.horizontal)
-                    })
-                    Spacer()
+                // 2. Loader
+                if viewModel.isLoading {
+                    LoadingView(color: AppColor.white)
                 }
-                .padding()
             }
             .toolbar {
                 // 1. Cancel button
@@ -98,7 +115,9 @@ extension ComposeTweetView {
     }
     
     private var tweetButton: some View {
-        Button(action: {},
+        Button(action: {
+            viewModel.makeTweet()
+        },
                label: {
             Text("Tweet")
                 .font(Font.custom(AppFont.regular.rawValue, size: 14))
@@ -148,7 +167,13 @@ extension ComposeTweetView {
                 cameraButton
                 // 3. Content
                 ForEach(viewModel.localMedia) { media in
-                    CTLocalMediaItemView(localMedia: media, size: viewModel.localPhotoSize)
+                    CTLocalMediaItemView(localMedia: media,
+                                         size: viewModel.localPhotoSize,
+                                         onTapAction: {
+                        viewModel.selectedMedia.append(media)
+                        viewModel.selectedPhotoPickerItems.append(PhotosPickerItem(itemIdentifier: media.localIdentifier))
+                        Log.info(viewModel.selectedMedia.count)
+                    })
                 }
                 // 4. Trailing inset
                 Spacer()
@@ -170,7 +195,7 @@ extension ComposeTweetView {
                                             size: viewModel.selectedMediaSize,
                                             action: {
                         if let index = viewModel.selectedMedia.firstIndex(where: { $0 == media }) {
-                            viewModel.selectedMedia.remove(at: index)
+                            viewModel.selectedPhotoPickerItems.remove(at: index)
                         }
                     })
                 }
@@ -245,29 +270,36 @@ struct CTSelectedMediaItemView: View {
 struct CTLocalMediaItemView: View {
     let localMedia: LocalMediaRepresentable
     let size: CGSize
+    let onTapAction: VoidCallback
     
-    init(localMedia: LocalMediaRepresentable, size: CGSize) {
+    init(localMedia: LocalMediaRepresentable,
+         size: CGSize,
+         onTapAction: @escaping VoidCallback) {
         self.localMedia = localMedia
         self.size = size
+        self.onTapAction = onTapAction
     }
     
     var body: some View {
         if let displayImage = localMedia.displayImage {
-            ZStack(alignment: .bottomTrailing) {
-                // 1. Thumbnail image if video OR Image
-                displayImage
-                    .resizable()
-                    .scaledToFill()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: size.width, height: size.height)
-                    .clipped()
-                    .clipShape(RoundedRectangle(cornerRadius: 17))
-                // 2. Duration if video
-                if let videoMedia = localMedia.videoMedia,
-                    let duration = videoMedia.videoDuration {
-                    CTLocalVideoDurationView(displayText: duration.displayText)
+            Button(action: onTapAction,
+                   label: {
+                ZStack(alignment: .bottomTrailing) {
+                    // 1. Thumbnail image if video OR Image
+                    displayImage
+                        .resizable()
+                        .scaledToFill()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: size.width, height: size.height)
+                        .clipped()
+                        .clipShape(RoundedRectangle(cornerRadius: 17))
+                    // 2. Duration if video
+                    if let videoMedia = localMedia.videoMedia,
+                        let duration = videoMedia.videoDuration {
+                        CTLocalVideoDurationView(displayText: duration.displayText)
+                    }
                 }
-            }
+            })
         } else {
             EmptyView()
         }
@@ -293,8 +325,8 @@ struct CTLocalVideoDurationView: View {
 }
 
 // MARK: - Preview
-struct ComposeTweetView_Previews: PreviewProvider {
-    static var previews: some View {
-        ComposeTweetView()
-    }
-}
+//struct ComposeTweetView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ComposeTweetView()
+//    }
+//}
