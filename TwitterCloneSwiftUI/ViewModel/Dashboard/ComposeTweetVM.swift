@@ -14,11 +14,10 @@ import _PhotosUI_SwiftUI
 class ComposeTweetVM: ObservableObject {
     
     @Published var text: String = ""
-    //@Published var localMedia: [LocalImage] = []
     @Published var localMedia: [LocalMediaRepresentable] = []
     @Published var selectedPhotoPickerItems: [PhotosPickerItem] = [] {
         didSet {
-            processSelectedImages()
+            processSelectedMedia()
         }
     }
     @Published var selectedMedia: [LocalMediaRepresentable] = []
@@ -36,15 +35,16 @@ extension ComposeTweetVM {
     
     /// Process images and videos selected by user
     /// Converts PhotosPickerItem to LocalMedia
-    private func processSelectedImages() {
+    private func processSelectedMedia() {
         
+        /// Process video item selected by user
+        /// Fetchs url from PhotoPickerItem
         func loadTransferable<T: Transferable>(type: T.Type,
                                                item: PhotosPickerItem,
                                                completion: @escaping (T)-> Void) {
             item.loadTransferable(type: type) { result in
                 switch result {
                 case .success(let video):
-                    //Log.success("Video URL: \(video)")
                     if let video = video {
                         completion(video)
                     } else {
@@ -56,19 +56,27 @@ extension ComposeTweetVM {
             }
         }
         
+        /// Generates thumbnai image rom video URL
+        /// Appends LocalVideoMidea object to local media array
         func appendVideo(url: URL) {
             DispatchQueue.main.async {
-                if let thumbnailImage = url.generateThumbnail() {
-                    let localVideoMedia = LocalVideoMedia(thumbnailImage: thumbnailImage,
-                                                          url: url,
-                                                          videoDuration: nil)
-                    self.selectedMedia.append(LocalMediaRepresentable(videoMedia: localVideoMedia))
-                } else {
+                // 1. Generate thumbnail image
+                guard let thumbnailImage = url.generateThumbnail() else {
                     Log.error("Couldn't generate thumbnail with URL: \(url)")
+                    return
                 }
+                // 2. Get video duration
+                let asset = AVAsset(url: url)
+                let totalSeconds = CMTimeGetSeconds(asset.duration)
+                // 3. Append to local media array
+                let localVideoMedia = LocalVideoMedia(thumbnailImage: thumbnailImage,
+                                                      url: url,
+                                                      videoDuration: VideoDuration(totalSeconds: totalSeconds))
+                self.selectedMedia.append(LocalMediaRepresentable(videoMedia: localVideoMedia))
             }
         }
         
+        /// Appends LocalImageMedia object to local media array
         func appendImage(url: URL) {
             DispatchQueue.main.async {
                 do {
@@ -83,9 +91,14 @@ extension ComposeTweetVM {
             }
         }
         
+        /// Remove all exisitng local media before processing
         DispatchQueue.main.async {
             self.selectedMedia.removeAll()
         }
+        
+        /// Iterate all selected photo picker item
+        /// Load transferable type
+        /// Append to local media array
         selectedPhotoPickerItems.forEach { item in
             if item.supportedContentTypes.contains([.video]) {
                 loadTransferable(type: VideoTransferable.self,
@@ -218,7 +231,6 @@ extension ComposeTweetVM {
         func processVideoAsset(asset: PHAsset) {
             imgManager.requestAVAsset(forVideo: asset,
                                       options: videoOptions) {[weak self] asset, audio, dictionary in
-                //print(dictionary)
                 if let urlAsset = asset as? AVURLAsset {
                     let totalSeconds = CMTimeGetSeconds(urlAsset.duration)
                     if let thumbnailImage = urlAsset.url.generateThumbnail() {
@@ -259,26 +271,6 @@ extension ComposeTweetVM {
                     Log.info(urlAsset.url)
                 }
             }
-        }
-    }
-}
-
-extension URL {
-    func generateThumbnail() -> UIImage? {
-        do {
-            let asset = AVURLAsset(url: self)
-            let imageGenerator = AVAssetImageGenerator(asset: asset)
-            imageGenerator.appliesPreferredTrackTransform = true
-            
-            // Swift 5.3
-            let cgImage = try imageGenerator.copyCGImage(at: .zero,
-                                                         actualTime: nil)
-            
-            return UIImage(cgImage: cgImage)
-        } catch {
-            print(error.localizedDescription)
-            
-            return nil
         }
     }
 }

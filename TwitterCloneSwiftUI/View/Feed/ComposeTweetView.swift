@@ -219,6 +219,11 @@ struct CTSelectedMediaItemView: View {
                     .scaledToFill()
                     .frame(width: width, height: height)
                     .clipShape(RoundedRectangle(cornerRadius: 17))
+                if let videoMedia = media.videoMedia {
+                    if let duration = videoMedia.videoDuration {
+                        CTLocalVideoDurationView(displayText: duration.displayText)
+                    }
+                }
                 Button(action: action,
                        label: {
                     //Image("ic_close")
@@ -258,21 +263,30 @@ struct CTLocalMediaItemView: View {
                 // 2. Duration if video
                 if let videoMedia = localMedia.videoMedia,
                     let duration = videoMedia.videoDuration {
-                    Text(duration.displayText)
-                        .font(Font.custom(AppFont.regular.rawValue, size: 12))
-                        .foregroundColor(AppColor.white)
-                        .padding(5)
-                        .background(
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(AppColor.darkGray.opacity(0.7))
-                        )
-                        .padding(.bottom, 8)
-                        .padding(.trailing, 8)
+                    CTLocalVideoDurationView(displayText: duration.displayText)
                 }
             }
         } else {
             EmptyView()
         }
+    }
+}
+
+// MARK: - Video Duration
+struct CTLocalVideoDurationView: View {
+    let displayText: String
+    
+    var body: some View {
+        Text(displayText)
+            .font(Font.custom(AppFont.regular.rawValue, size: 12))
+            .foregroundColor(AppColor.white)
+            .padding(5)
+            .background(
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(AppColor.darkGray.opacity(0.7))
+            )
+            .padding(.bottom, 8)
+            .padding(.trailing, 8)
     }
 }
 
