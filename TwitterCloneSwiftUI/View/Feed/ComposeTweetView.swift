@@ -138,7 +138,7 @@ extension ComposeTweetView {
     }
     
     private var localMediaGrid: some View {
-        ScrollView(.horizontal) {
+        ScrollView(.horizontal, showsIndicators: false) {
             LazyHGrid(rows: [GridItem(.fixed(100), spacing: 20)],
                       content: {
                 // 1. Leading inset
@@ -158,7 +158,7 @@ extension ComposeTweetView {
     }
     
     private var selectedMediaGrid: some View {
-        ScrollView(.horizontal) {
+        ScrollView(.horizontal, showsIndicators: false) {
             LazyHGrid(rows: [GridItem(.flexible(), spacing: 20)],
                       content: {
                 // 1. Leading inset
@@ -167,6 +167,7 @@ extension ComposeTweetView {
                 // 2. Content
                 ForEach(viewModel.selectedMedia) { media in
                     CTSelectedMediaItemView(media: media,
+                                            size: viewModel.selectedMediaSize,
                                             action: {
                         if let index = viewModel.selectedMedia.firstIndex(where: { $0 == media }) {
                             viewModel.selectedMedia.remove(at: index)
@@ -198,36 +199,40 @@ extension ComposeTweetView {
 // MARK: - Selected Media Item View
 struct CTSelectedMediaItemView: View {
     let media: LocalMediaRepresentable
-    let width: CGFloat
-    let height: CGFloat
+    let size: CGSize
     let action: VoidCallback
     
     init(media: LocalMediaRepresentable,
+         size: CGSize,
          action: @escaping VoidCallback) {
         self.media = media
-        self.width = (Geometry.width * 0.6)
-        self.height = (Geometry.width * 0.6) * 2
+        self.size = size
         self.action = action
-        //Log.info("Width: \(width), Height: \(height)")
     }
     
     var body: some View {
         if let displayImage = media.displayImage {
-            ZStack(alignment: .center) {
+            ZStack(alignment: .topTrailing) {
                 displayImage
                     .resizable()
                     .scaledToFill()
-                    .frame(width: width, height: height)
+                    .frame(width: size.width, height: size.height)
                     .clipShape(RoundedRectangle(cornerRadius: 17))
                 if let videoMedia = media.videoMedia {
                     if let duration = videoMedia.videoDuration {
-                        CTLocalVideoDurationView(displayText: duration.displayText)
+                        VStack {
+                            Spacer()
+                            CTLocalVideoDurationView(displayText: duration.displayText)
+                        }
                     }
                 }
                 Button(action: action,
                        label: {
-                    //Image("ic_close")
-                    Text("Close")
+                    Image("ic_close")
+                        .background {
+                            Circle()
+                                .stroke(AppColor.white, lineWidth: 10)
+                        }
                 })
             }
         } else {
@@ -244,9 +249,6 @@ struct CTLocalMediaItemView: View {
     init(localMedia: LocalMediaRepresentable, size: CGSize) {
         self.localMedia = localMedia
         self.size = size
-//        self.width = width
-//        self.height = height
-        //Log.info("Width: \(width), Height: \(height)")
     }
     
     var body: some View {

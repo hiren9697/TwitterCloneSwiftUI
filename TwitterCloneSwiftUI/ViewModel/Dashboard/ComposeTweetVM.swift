@@ -22,6 +22,8 @@ class ComposeTweetVM: ObservableObject {
     }
     @Published var selectedMedia: [LocalMediaRepresentable] = []
     let localPhotoSize: CGSize = CGSize(width: 78, height: 78)
+    let selectedMediaSize: CGSize = CGSize(width: Geometry.width * 0.6,
+                                           height: (Geometry.width * 0.6) * 1.5)
 }
 
 // MARK: - Helper method(s)
